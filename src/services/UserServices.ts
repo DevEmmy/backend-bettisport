@@ -21,6 +21,11 @@ export class UserServices {
         try {
             let { email, password } = data;
 
+            let checkUser = await this.repo.findByEmail(email);
+            if(checkUser){
+                return {message: "User with this email already exists."}
+            }
+
             data.password = await bcrypt.hash(password, 8);
             let user = await this.repo.create(data);
             let token = this.generateToken(String(user._id))

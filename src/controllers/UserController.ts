@@ -14,7 +14,10 @@ export class UserController{
     async signUp(req: Request, res: Response){
         try{
             const body : userDto = req.body;
-            let {payload} = await this.service.signUp(body);
+            let {payload, message} = await this.service.signUp(body);
+            if(!payload && message){
+                return error(message, res, 400)
+            }
             return success(payload, res);
         }   
         catch(err: any){
