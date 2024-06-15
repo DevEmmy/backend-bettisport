@@ -4,6 +4,10 @@ import cors from 'cors'
 import corsOptions from './src/config/cors';
 require("dotenv").config()
 import userRouter from "./src/router/UserRouter"
+import postRouter from "./src/router/PostRouter"
+import commentRouter from './src/router/CommentRouter';
+import categoryRouter from './src/router/CategoryRouter';
+import pollRouter from './src/router/PollRouter';
 import "reflect-metadata";
 
 const app = express();
@@ -22,6 +26,10 @@ const connection = mongoose.connection
 connection.once('open', () => { console.log('Database running Successfully') });
 
 app.use("/auth", userRouter)
+app.use("/posts", postRouter)
+app.use("/comment", commentRouter)
+app.use("/category", categoryRouter)
+app.use("/poll", pollRouter)
 
 //render the html file
 app.get('/', (req, res) => {
