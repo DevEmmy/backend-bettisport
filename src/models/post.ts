@@ -12,8 +12,8 @@ const schema = new Schema({
     media : String,
     publish: {type: Boolean, default: false},
     categories: [{type: Schema.Types.ObjectId, ref: "Category"}],
-    menCategories: [{type: String}],
-    womenCategories: [{type: String}],
+    menCategories: [{type: Schema.Types.ObjectId, ref: "Category"}],
+    womenCategories: [{type: Schema.Types.ObjectId, ref: "Category"}],
     excerpt: String,
     format: String,
     tags: [{type: String}],
@@ -22,6 +22,9 @@ const schema = new Schema({
     highlight: {type: String},
     photoSplash: {type: String},
     slug: String,
+    fantasy: {type: Boolean, default: false},
+    editorsPick: {type: Boolean, default: false},
+    newsBreaking: {type: Boolean, default: false},
 
 })
 

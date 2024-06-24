@@ -2,6 +2,7 @@ import { Service } from "typedi";
 import CategoryRepository from "../repositories/CategoryRepository";
 import { CategoryDto, UpdateCategoryDto } from "../dto/category-dto";
 import "reflect-metadata";
+import { slugify } from "../utils/slugify";
 
 @Service()
 export class CategoryService {
@@ -9,6 +10,7 @@ export class CategoryService {
 
     async createCategory(data: CategoryDto) {
         try {
+            data.slug = slugify(data.title)
             const category = await this.repo.create(data);
             return category;
         } catch (err: any) {

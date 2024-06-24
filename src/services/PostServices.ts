@@ -70,6 +70,15 @@ export class PostService {
         }
     }
 
+    async findPostsByEditorsPick() {
+        try {
+            const posts = await this.repo.getPostsByEditorsPick();
+            return posts;
+        } catch (err: any) {
+            throw new Error(err.message);
+        }
+    }
+
     // async findPostsBySlug(slug: string) {
     //     try {
     //         const posts = await this.repo.findBySlug(slug);

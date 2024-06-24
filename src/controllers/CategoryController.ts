@@ -21,6 +21,20 @@ export class CategoryController {
         }
     }
 
+    async addMultiple(req: Request, res: Response) {
+        try {
+            const {categories} = req.body;
+
+            for(let i=0; i<categories.length-1; i++){
+                const category = await this.service.createCategory(categories[i]);
+            }
+            
+            return success(null, res);
+        } catch (err: any) {
+            error(err.message, res, err.status || 400);
+        }
+    }
+
     async getCategoryById(req: Request, res: Response) {
         try {
             const { id } = req.params;

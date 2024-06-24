@@ -77,6 +77,11 @@ class PostRepository {
         const result = await this.model.find({ categories: { $in: categories } });
         return result;
     }
+
+    async getPostsByEditorsPick() {
+        const result = await this.model.find({editorsPick: true });
+        return result;
+    }
 }
 
 export default PostRepository;
