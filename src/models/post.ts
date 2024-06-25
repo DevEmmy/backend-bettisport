@@ -25,7 +25,8 @@ const schema = new Schema({
     fantasy: {type: Boolean, default: false},
     editorsPick: {type: Boolean, default: false},
     newsBreaking: {type: Boolean, default: false},
-
+    comments: {type: Schema.Types.ObjectId, ref: "Comment"},
+    reads: {type: Number, default: 0},
 })
 
 const Post = mongoose.model("Post", schema);

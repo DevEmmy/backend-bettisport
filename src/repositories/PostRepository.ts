@@ -82,6 +82,14 @@ class PostRepository {
         const result = await this.model.find({editorsPick: true });
         return result;
     }
+
+    async findMostRead() {
+        return await this.model.find().sort({ reads: -1 }).exec();
+    }
+
+    async findMostInteracted() {
+        return await this.model.find().sort({ comments: -1 }).exec();
+    }
 }
 
 export default PostRepository;

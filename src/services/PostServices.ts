@@ -79,12 +79,21 @@ export class PostService {
         }
     }
 
-    // async findPostsBySlug(slug: string) {
-    //     try {
-    //         const posts = await this.repo.findBySlug(slug);
-    //         return posts;
-    //     } catch (err: any) {
-    //         throw new Error(err.message);
-    //     }
-    // }
+    async findPostsByMostRead() {
+        try {
+            const posts = await this.repo.findMostRead();
+            return posts;
+        } catch (err: any) {
+            throw new Error(err.message);
+        }
+    }
+
+    async findPostsByMostInteracted() {
+        try {
+            const posts = await this.repo.findMostInteracted();
+            return posts;
+        } catch (err: any) {
+            throw new Error(err.message);
+        }
+    }
 }

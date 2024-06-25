@@ -89,6 +89,24 @@ export class PostController {
         }
     }
 
+    async findPostsByMostRead(req: Request, res: Response) {
+        try {
+            const posts = await this.service.findPostsByMostRead();
+            return success(posts, res);
+        } catch (err: any) {
+            error(err.message, res, err.status || 400);
+        }
+    }
+
+    async findPostsByMostInteracted(req: Request, res: Response) {
+        try {
+            const posts = await this.service.findPostsByMostInteracted();
+            return success(posts, res);
+        } catch (err: any) {
+            error(err.message, res, err.status || 400);
+        }
+    }
+
     // Uncomment and implement this method if you want to find posts by slug
     // async findPostsBySlug(req: Request, res: Response) {
     //     try {
