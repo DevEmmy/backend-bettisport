@@ -89,6 +89,15 @@ export class PostController {
         }
     }
 
+    async findPostsByNewsBreaking(req: Request, res: Response) {
+        try {
+            const posts = await this.service.findPostsByEditorsPick();
+            return success(posts, res);
+        } catch (err: any) {
+            error(err.message, res, err.status || 400);
+        }
+    }
+
     async findPostsByMostRead(req: Request, res: Response) {
         try {
             const posts = await this.service.findPostsByMostRead();

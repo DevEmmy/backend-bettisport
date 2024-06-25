@@ -79,6 +79,15 @@ export class PostService {
         }
     }
 
+    async findPostsByNewsBreaking() {
+        try {
+            const posts = await this.repo.getPostsByNewsBreaking();
+            return posts;
+        } catch (err: any) {
+            throw new Error(err.message);
+        }
+    }
+
     async findPostsByMostRead() {
         try {
             const posts = await this.repo.findMostRead();

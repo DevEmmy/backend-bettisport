@@ -78,6 +78,11 @@ class PostRepository {
         return result;
     }
 
+    async getPostsByNewsBreaking() {
+        const result = await this.model.find({newsBreaking: true });
+        return result;
+    }
+
     async getPostsByEditorsPick() {
         const result = await this.model.find({editorsPick: true });
         return result;

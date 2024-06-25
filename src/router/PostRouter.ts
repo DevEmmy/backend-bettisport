@@ -11,6 +11,7 @@ postRouter.get("/", (req: Request, res: Response) => postController.getAllPosts(
 postRouter.get("/class/editors", (req: Request, res: Response) => postController.findPostsByEditorsPick(req, res));
 postRouter.get("/class/trending", (req: Request, res: Response) => postController.findPostsByMostRead(req, res));
 postRouter.get("/class/popular", (req: Request, res: Response) => postController.findPostsByMostInteracted(req, res));
+postRouter.get("/class/news-breaking", (req: Request, res: Response) => postController.findPostsByNewsBreaking(req, res));
 postRouter.put("/:id", (req: Request, res: Response) => postController.updatePost(req, res));
 postRouter.delete("/:id", (req: Request, res: Response) => postController.deletePost(req, res));
 postRouter.get("/author/:authorId", (req: Request, res: Response) => postController.findPostsByAuthor(req, res));
