@@ -95,6 +95,10 @@ class PostRepository {
     async findMostInteracted() {
         return await this.model.find().sort({ comments: -1 }).exec();
     }
+
+    async findFeatured() {
+        return await this.model.find({featured: true})
+    }
 }
 
 export default PostRepository;

@@ -105,4 +105,13 @@ export class PostService {
             throw new Error(err.message);
         }
     }
+
+    async findPostsByFeatured() {
+        try {
+            const posts = await this.repo.findFeatured();
+            return posts;
+        } catch (err: any) {
+            throw new Error(err.message);
+        }
+    }
 }
