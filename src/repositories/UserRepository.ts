@@ -29,7 +29,7 @@ class UserRepository{
         return result;
     }
 
-    async update(id: string, data: UpdateUserDto){
+    async update(id: string, data: any){
         const result = await this.model.findByIdAndUpdate(id, data, {new: true});
         return result;
     }

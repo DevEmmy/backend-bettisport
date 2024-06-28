@@ -40,4 +40,28 @@ export class UserController{
             error(err.message, res, err.status||400);
         }
     }
+
+    async likePost(req: Request, res: Response){
+        try{
+            const {postId} = req.params;
+            const {userId} = req.body;
+            let {payload} = await this.service.likePost(postId, userId);
+            return success(payload, res);
+        }   
+        catch(err: any){
+            error(err.message, res, err.status||400);
+        }
+    }
+
+    async savePost(req: Request, res: Response){
+        try{
+            const {postId} = req.params;
+            const {userId} = req.body;
+            let {payload} = await this.service.savePost(postId, userId);
+            return success(payload, res);
+        }   
+        catch(err: any){
+            error(err.message, res, err.status||400);
+        }
+    }
 }

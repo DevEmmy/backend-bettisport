@@ -5,6 +5,7 @@ require("dotenv").config();
 import bcrypt from "bcrypt"
 import "reflect-metadata";
 import { Service } from "typedi";
+import mongoose from "mongoose";
 
 let jwtSecret = process.env.JWT_SECRET as string;
 
@@ -64,5 +65,35 @@ export class UserServices {
 
     async getUserById(id: string) {
 
+    }
+
+    async likePost(postId: string, userId: string){
+        try{
+            let user = await this.repo.findById(userId);
+            user?.likes.push(new mongoose.Types.ObjectId(postId));
+            user = await this.repo.update(userId, user)
+            return {
+                payload: user,
+                message: "Post Saved"
+            }
+        }
+        catch (err: any) {
+            throw Error(err.message);
+        }
+    }
+
+    async savePost(postId: string, userId: string){
+        try{
+            let user = await this.repo.findById(userId);
+            user?.saved.push(new mongoose.Types.ObjectId(postId));
+            user = await this.repo.update(userId, user)
+            return {
+                payload: user,
+                message: "Post Saved"
+            }
+        }
+        catch (err: any) {
+            throw Error(err.message);
+        }
     }
 }

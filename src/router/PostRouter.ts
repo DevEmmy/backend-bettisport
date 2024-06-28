@@ -17,4 +17,5 @@ postRouter.put("/:id", (req: Request, res: Response) => postController.updatePos
 postRouter.delete("/:id", (req: Request, res: Response) => postController.deletePost(req, res));
 postRouter.get("/author/:authorId", (req: Request, res: Response) => postController.findPostsByAuthor(req, res));
 
+
 export default postRouter;
