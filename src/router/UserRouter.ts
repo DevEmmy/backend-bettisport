@@ -7,6 +7,7 @@ const userController = Container.get(UserController);
 router.post("/sign-in", (req: Request, res:Response)=> userController.signIn(req, res))
 router.post("/sign-up", (req: Request, res:Response)=> userController.signUp(req, res))
 router.patch("/like/:postId", (req: Request, res: Response) => userController.likePost(req, res))
-router.patch("/save/:postId", (req: Request, res: Response) => userController.likePost(req, res))
+router.patch("/save/:postId", (req: Request, res: Response) => userController.savePost(req, res))
+router.get("/likes-and-saved/:userId", (req: Request, res: Response) => userController.getLikedAndSaved(req, res))
 
 export default router;

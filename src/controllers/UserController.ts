@@ -64,4 +64,15 @@ export class UserController{
             error(err.message, res, err.status||400);
         }
     }
+
+    async getLikedAndSaved(req: Request, res: Response){
+        try{
+            const {userId} = req.params;
+            let {payload} = await this.service.getLikedAndSaved(userId);
+            return success(payload, res);
+        }   
+        catch(err: any){
+            error(err.message, res, err.status||400);
+        }
+    }
 }

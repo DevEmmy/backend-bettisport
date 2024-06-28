@@ -96,4 +96,14 @@ export class UserServices {
             throw Error(err.message);
         }
     }
+
+    async getLikedAndSaved(userId: string){
+        try{
+            let payload = await this.repo.getLikedAndSavedPosts(userId);
+            return {payload};
+        }
+        catch (err: any) {
+            throw Error(err.message);
+        }
+    }
 }

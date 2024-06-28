@@ -99,6 +99,8 @@ class PostRepository {
     async findFeatured() {
         return await this.model.find({featured: true})
     }
+
+    
 }
 
 export default PostRepository;

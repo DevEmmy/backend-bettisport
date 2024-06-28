@@ -33,6 +33,14 @@ class UserRepository{
         const result = await this.model.findByIdAndUpdate(id, data, {new: true});
         return result;
     }
+
+    async getLikedAndSavedPosts(userId: string){
+        const user = await this.model.findById(userId).populate("likes").populate("saved")
+        let saved = user?.saved
+        let likes = user?.likes
+
+        return {saved, likes}
+    }
 }
 
 export default UserRepository;
