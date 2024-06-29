@@ -2,6 +2,7 @@ import { Service } from "typedi"
 import User from "../models/user"
 import { UpdateUserDto, userDto } from "../dto/user-dto";
 import "reflect-metadata";
+import { Roles } from "../enums/role-enums";
 
 @Service()
 class UserRepository{
@@ -40,6 +41,11 @@ class UserRepository{
         let likes = user?.likes
 
         return {saved, likes}
+    }
+
+    async findByRoles(role: string | null){
+        const users : userDto[] =await this.model.find({role});
+        return users
     }
 }
 

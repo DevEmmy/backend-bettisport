@@ -75,4 +75,15 @@ export class UserController{
             error(err.message, res, err.status||400);
         }
     }
+
+    async filterByRole(req: Request, res: Response){
+        try{
+            const {role} = req.params;
+            let {payload} = await this.service.getUsersByRoles(role);
+            return success(payload, res);
+        }   
+        catch(err: any){
+            error(err.message, res, err.status||400);
+        }
+    }
 }

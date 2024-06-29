@@ -106,4 +106,16 @@ export class UserServices {
             throw Error(err.message);
         }
     }
+
+    async getUsersByRoles(role: string | null){
+        try{
+            let payload : userDto[] = await this.repo.findByRoles(role);
+            return {payload}
+        }
+        catch (err: any) {
+            throw Error(err.message);
+        }
+    }
+
+
 }

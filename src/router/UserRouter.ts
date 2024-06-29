@@ -9,5 +9,6 @@ router.post("/sign-up", (req: Request, res:Response)=> userController.signUp(req
 router.patch("/like/:postId", (req: Request, res: Response) => userController.likePost(req, res))
 router.patch("/save/:postId", (req: Request, res: Response) => userController.savePost(req, res))
 router.get("/likes-and-saved/:userId", (req: Request, res: Response) => userController.getLikedAndSaved(req, res))
+router.get("/:role", (req: Request, res: Response) => userController.filterByRole(req, res))
 
 export default router;
