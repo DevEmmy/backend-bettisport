@@ -86,4 +86,15 @@ export class UserController{
             error(err.message, res, err.status||400);
         }
     }
+
+    async getLoggedInUser(req: Request, res: Response){
+        try{
+            const {user} = req.body;
+            
+            // return success(payload, res);
+        }   
+        catch(err: any){
+            error(err.message, res, err.status||400);
+        }
+    }
 }
