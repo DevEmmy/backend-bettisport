@@ -41,60 +41,60 @@ export class UserController{
         }
     }
 
-    async likePost(req: Request, res: Response){
-        try{
-            const {postId} = req.params;
-            const {userId} = req.body;
-            let {payload} = await this.service.likePost(postId, userId);
-            return success(payload, res);
-        }   
-        catch(err: any){
-            error(err.message, res, err.status||400);
-        }
-    }
+    // async likePost(req: Request, res: Response){
+    //     try{
+    //         const {postId} = req.params;
+    //         const {userId} = req.body;
+    //         let {payload} = await this.service.likePost(postId, userId);
+    //         return success(payload, res);
+    //     }   
+    //     catch(err: any){
+    //         error(err.message, res, err.status||400);
+    //     }
+    // }
 
-    async savePost(req: Request, res: Response){
-        try{
-            const {postId} = req.params;
-            const {userId} = req.body;
-            let {payload} = await this.service.savePost(postId, userId);
-            return success(payload, res);
-        }   
-        catch(err: any){
-            error(err.message, res, err.status||400);
-        }
-    }
+    // async savePost(req: Request, res: Response){
+    //     try{
+    //         const {postId} = req.params;
+    //         const {userId} = req.body;
+    //         let {payload} = await this.service.savePost(postId, userId);
+    //         return success(payload, res);
+    //     }   
+    //     catch(err: any){
+    //         error(err.message, res, err.status||400);
+    //     }
+    // }
 
-    async getLikedAndSaved(req: Request, res: Response){
-        try{
-            const {userId} = req.params;
-            let {payload} = await this.service.getLikedAndSaved(userId);
-            return success(payload, res);
-        }   
-        catch(err: any){
-            error(err.message, res, err.status||400);
-        }
-    }
+    // async getLikedAndSaved(req: Request, res: Response){
+    //     try{
+    //         const {userId} = req.params;
+    //         let {payload} = await this.service.getLikedAndSaved(userId);
+    //         return success(payload, res);
+    //     }   
+    //     catch(err: any){
+    //         error(err.message, res, err.status||400);
+    //     }
+    // }
 
-    async filterByRole(req: Request, res: Response){
-        try{
-            const {role} = req.params;
-            let {payload} = await this.service.getUsersByRoles(role);
-            return success(payload, res);
-        }   
-        catch(err: any){
-            error(err.message, res, err.status||400);
-        }
-    }
+    // async filterByRole(req: Request, res: Response){
+    //     try{
+    //         const {role} = req.params;
+    //         let {payload} = await this.service.getUsersByRoles(role);
+    //         return success(payload, res);
+    //     }   
+    //     catch(err: any){
+    //         error(err.message, res, err.status||400);
+    //     }
+    // }
 
-    async getLoggedInUser(req: Request, res: Response){
-        try{
-            const {user} = req.body;
+    // async getLoggedInUser(req: Request, res: Response){
+    //     try{
+    //         const {user} = req.body;
             
-            // return success(payload, res);
-        }   
-        catch(err: any){
-            error(err.message, res, err.status||400);
-        }
-    }
+    //         // return success(payload, res);
+    //     }   
+    //     catch(err: any){
+    //         error(err.message, res, err.status||400);
+    //     }
+    // }
 }

@@ -67,55 +67,55 @@ export class UserServices {
 
     }
 
-    async likePost(postId: string, userId: string){
-        try{
-            let user = await this.repo.findById(userId);
-            user?.likes.push(new mongoose.Types.ObjectId(postId));
-            user = await this.repo.update(userId, user)
-            return {
-                payload: user,
-                message: "Post Saved"
-            }
-        }
-        catch (err: any) {
-            throw Error(err.message);
-        }
-    }
+    // async likePost(postId: string, userId: string){
+    //     try{
+    //         let user = await this.repo.findById(userId);
+    //         user?.likes.push(new mongoose.Types.ObjectId(postId));
+    //         user = await this.repo.update(userId, user)
+    //         return {
+    //             payload: user,
+    //             message: "Post Saved"
+    //         }
+    //     }
+    //     catch (err: any) {
+    //         throw Error(err.message);
+    //     }
+    // }
 
-    async savePost(postId: string, userId: string){
-        try{
-            let user = await this.repo.findById(userId);
-            user?.saved.push(new mongoose.Types.ObjectId(postId));
-            user = await this.repo.update(userId, user)
-            return {
-                payload: user,
-                message: "Post Saved"
-            }
-        }
-        catch (err: any) {
-            throw Error(err.message);
-        }
-    }
+    // async savePost(postId: string, userId: string){
+    //     try{
+    //         let user = await this.repo.findById(userId);
+    //         user?.saved.push(new mongoose.Types.ObjectId(postId));
+    //         user = await this.repo.update(userId, user)
+    //         return {
+    //             payload: user,
+    //             message: "Post Saved"
+    //         }
+    //     }
+    //     catch (err: any) {
+    //         throw Error(err.message);
+    //     }
+    // }
 
-    async getLikedAndSaved(userId: string){
-        try{
-            let payload = await this.repo.getLikedAndSavedPosts(userId);
-            return {payload};
-        }
-        catch (err: any) {
-            throw Error(err.message);
-        }
-    }
+    // async getLikedAndSaved(userId: string){
+    //     try{
+    //         let payload = await this.repo.getLikedAndSavedPosts(userId);
+    //         return {payload};
+    //     }
+    //     catch (err: any) {
+    //         throw Error(err.message);
+    //     }
+    // }
 
-    async getUsersByRoles(role: string | null){
-        try{
-            let payload : userDto[] = await this.repo.findByRoles(role);
-            return {payload}
-        }
-        catch (err: any) {
-            throw Error(err.message);
-        }
-    }
+    // async getUsersByRoles(role: string | null){
+    //     try{
+    //         let payload : userDto[] = await this.repo.findByRoles(role);
+    //         return {payload}
+    //     }
+    //     catch (err: any) {
+    //         throw Error(err.message);
+    //     }
+    // }
 
 
 }
