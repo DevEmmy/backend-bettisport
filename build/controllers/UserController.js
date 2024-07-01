@@ -58,6 +58,67 @@ let UserController = exports.UserController = class UserController {
             }
         });
     }
+    likePost(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { postId } = req.params;
+                const { userId } = req.body;
+                let { payload } = yield this.service.likePost(postId, userId);
+                return (0, response_1.success)(payload, res);
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
+    savePost(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { postId } = req.params;
+                const { userId } = req.body;
+                let { payload } = yield this.service.savePost(postId, userId);
+                return (0, response_1.success)(payload, res);
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
+    getLikedAndSaved(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { userId } = req.params;
+                let { payload } = yield this.service.getLikedAndSaved(userId);
+                return (0, response_1.success)(payload, res);
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
+    filterByRole(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { role } = req.params;
+                let { payload } = yield this.service.getUsersByRoles(role);
+                return (0, response_1.success)(payload, res);
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
+    getLoggedInUser(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { user } = req.body;
+                // return success(payload, res);
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
 };
 exports.UserController = UserController = __decorate([
     (0, typedi_1.Service)(),

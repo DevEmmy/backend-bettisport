@@ -28,6 +28,7 @@ require("dotenv").config();
 const bcrypt_1 = __importDefault(require("bcrypt"));
 require("reflect-metadata");
 const typedi_1 = require("typedi");
+const mongoose_1 = __importDefault(require("mongoose"));
 let jwtSecret = process.env.JWT_SECRET;
 let UserServices = exports.UserServices = class UserServices {
     constructor(repo) {
@@ -82,6 +83,60 @@ let UserServices = exports.UserServices = class UserServices {
     }
     getUserById(id) {
         return __awaiter(this, void 0, void 0, function* () {
+        });
+    }
+    likePost(postId, userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let user = yield this.repo.findById(userId);
+                user === null || user === void 0 ? void 0 : user.likes.push(new mongoose_1.default.Types.ObjectId(postId));
+                user = yield this.repo.update(userId, user);
+                return {
+                    payload: user,
+                    message: "Post Saved"
+                };
+            }
+            catch (err) {
+                throw Error(err.message);
+            }
+        });
+    }
+    savePost(postId, userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let user = yield this.repo.findById(userId);
+                user === null || user === void 0 ? void 0 : user.saved.push(new mongoose_1.default.Types.ObjectId(postId));
+                user = yield this.repo.update(userId, user);
+                return {
+                    payload: user,
+                    message: "Post Saved"
+                };
+            }
+            catch (err) {
+                throw Error(err.message);
+            }
+        });
+    }
+    getLikedAndSaved(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let payload = yield this.repo.getLikedAndSavedPosts(userId);
+                return { payload };
+            }
+            catch (err) {
+                throw Error(err.message);
+            }
+        });
+    }
+    getUsersByRoles(role) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let payload = yield this.repo.findByRoles(role);
+                return { payload };
+            }
+            catch (err) {
+                throw Error(err.message);
+            }
         });
     }
 };

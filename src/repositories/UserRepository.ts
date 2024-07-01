@@ -35,18 +35,18 @@ class UserRepository{
         return result;
     }
 
-    // async getLikedAndSavedPosts(userId: string){
-    //     const user = await this.model.findById(userId).populate("likes").populate("saved")
-    //     let saved = user?.saved
-    //     let likes = user?.likes
+    async getLikedAndSavedPosts(userId: string){
+        const user = await this.model.findById(userId).populate("likes").populate("saved")
+        let saved = user?.saved
+        let likes = user?.likes
 
-    //     return {saved, likes}
-    // }
+        return {saved, likes}
+    }
 
-    // async findByRoles(role: string | null){
-    //     const users : userDto[] =await this.model.find({role});
-    //     return users
-    // }
+    async findByRoles(role: string | null){
+        const users : userDto[] =await this.model.find({role});
+        return users
+    }
 }
 
 export default UserRepository;

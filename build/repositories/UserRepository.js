@@ -58,6 +58,20 @@ let UserRepository = class UserRepository {
             return result;
         });
     }
+    getLikedAndSavedPosts(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield this.model.findById(userId).populate("likes").populate("saved");
+            let saved = user === null || user === void 0 ? void 0 : user.saved;
+            let likes = user === null || user === void 0 ? void 0 : user.likes;
+            return { saved, likes };
+        });
+    }
+    findByRoles(role) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const users = yield this.model.find({ role });
+            return users;
+        });
+    }
 };
 UserRepository = __decorate([
     (0, typedi_1.Service)(),
