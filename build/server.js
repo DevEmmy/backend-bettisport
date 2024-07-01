@@ -13,6 +13,8 @@ const CommentRouter_1 = __importDefault(require("./router/CommentRouter"));
 const CategoryRouter_1 = __importDefault(require("./router/CategoryRouter"));
 const PollRouter_1 = __importDefault(require("./router/PollRouter"));
 require("reflect-metadata");
+const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const app = (0, express_1.default)();
 const port = String(process.env.PORT) || 3030;
 // Set up your routes and middleware here
@@ -32,8 +34,28 @@ app.use("/category", CategoryRouter_1.default);
 app.use("/poll", PollRouter_1.default);
 //render the html file
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
+    res.sendFile("build" + '/public/index.html');
 });
+const options = {
+    definition: {
+        openapi: "3.1.0",
+        info: {
+            title: "Bettisports API",
+            version: "0.1.0",
+            description: "This is the docs for all APIs for Bettisports",
+        },
+        servers: [
+            {
+                url: "https://bettisports-backend.onrender.com",
+            },
+        ],
+    },
+    apis: ["./src/docs/*.ts"],
+};
+const specs = (0, swagger_jsdoc_1.default)(options);
+app.use("/api-docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(specs, { explorer: true,
+    customCssUrl: "https://cdn.jsdelivr.net/npm/swagger-ui-themes@3.0.0/themes/3.x/theme-newspaper.css",
+}));
 // Run Server
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

@@ -30,7 +30,7 @@ var PublishType;
     PublishType["PUBLISH"] = "PUBLISH";
 })(PublishType || (PublishType = {}));
 const schema = new mongoose_1.Schema({
-    title: String,
+    title: { type: String, require: true },
     author: { type: mongoose_1.Schema.Types.ObjectId, ref: "User" },
     content: String,
     media: String,
