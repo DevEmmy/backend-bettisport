@@ -1,13 +1,13 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
-import corsOptions from './src/config/cors';
+import corsOptions from './config/cors';
 require("dotenv").config()
-import userRouter from "./src/router/UserRouter"
-import postRouter from "./src/router/PostRouter"
-import commentRouter from './src/router/CommentRouter';
-import categoryRouter from './src/router/CategoryRouter';
-import pollRouter from './src/router/PollRouter';
+import userRouter from "./router/UserRouter"
+import postRouter from "./router/PostRouter"
+import commentRouter from './router/CommentRouter';
+import categoryRouter from './router/CategoryRouter';
+import pollRouter from './router/PollRouter';
 import "reflect-metadata";
 
 const app = express();
