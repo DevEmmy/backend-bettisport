@@ -6,7 +6,7 @@ enum PublishType {
 }
 
 const schema = new Schema({
-    title: String,
+    title: {type:String, require: true},
     author:{type: Schema.Types.ObjectId, ref: "User"},
     content: String,
     media : String,

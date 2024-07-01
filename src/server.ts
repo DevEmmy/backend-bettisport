@@ -9,6 +9,8 @@ import commentRouter from './router/CommentRouter';
 import categoryRouter from './router/CategoryRouter';
 import pollRouter from './router/PollRouter';
 import "reflect-metadata";
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUI from "swagger-ui-express"
 
 const app = express();
 const port = String(process.env.PORT) || 3030;
@@ -33,8 +35,36 @@ app.use("/poll", pollRouter)
 
 //render the html file
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+  res.sendFile("build" + '/public/index.html');
 });
+
+const options = {
+  definition: {
+    openapi: "3.1.0",
+    info: {
+      title: "Bettisports API",
+      version: "0.1.0",
+      description:
+        "This is the docs for all APIs for Bettisports",
+    },
+    servers: [
+      {
+        url: "https://bettisports-backend.onrender.com",
+      },
+    ],
+  },
+  apis: ["./src/docs/*.ts"],
+};
+
+const specs = swaggerJSDoc(options);
+app.use(
+  "/api-docs",
+  swaggerUI.serve,
+  swaggerUI.setup(specs, { explorer: true,
+    customCssUrl:
+    "https://cdn.jsdelivr.net/npm/swagger-ui-themes@3.0.0/themes/3.x/theme-newspaper.css",
+  })
+);
 
 // Run Server
 app.listen(port, () => {
