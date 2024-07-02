@@ -51,7 +51,8 @@ const schema = new mongoose_1.Schema({
     newsBreaking: { type: Boolean, default: false },
     comments: { type: mongoose_1.Schema.Types.ObjectId, ref: "Comment" },
     reads: { type: Number, default: 0 },
-    featured: { type: Boolean, default: false }
+    featured: { type: Boolean, default: false },
+    article: { type: Boolean, default: false }
 });
 const Post = mongoose_1.default.model("Post", schema);
 exports.default = Post;

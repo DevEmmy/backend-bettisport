@@ -159,6 +159,28 @@ let PostService = exports.PostService = class PostService {
             }
         });
     }
+    findPostsByArticles() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const posts = yield this.repo.findArticles();
+                return posts;
+            }
+            catch (err) {
+                throw new Error(err.message);
+            }
+        });
+    }
+    findPostsByCategories(categories) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const posts = yield this.repo.getPostsByCategories(categories);
+                return posts;
+            }
+            catch (err) {
+                throw new Error(err.message);
+            }
+        });
+    }
 };
 exports.PostService = PostService = __decorate([
     (0, typedi_1.Service)(),

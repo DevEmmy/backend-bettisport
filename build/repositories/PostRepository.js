@@ -128,6 +128,11 @@ let PostRepository = class PostRepository {
             return yield this.model.find({ featured: true });
         });
     }
+    findArticles() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.model.find({ article: true });
+        });
+    }
 };
 PostRepository = __decorate([
     (0, typedi_1.Service)(),

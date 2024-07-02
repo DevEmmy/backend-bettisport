@@ -272,6 +272,22 @@
  *       500:
  *         description: Some server error
  *
+ * /posts/class/articles:
+ *   get:
+ *     summary: Get articles posts
+ *     tags: [Posts]
+ *     responses:
+ *       200:
+ *         description: Successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Post'
+ *       500:
+ *         description: Some server error
+ *
  * /posts/author/{authorId}:
  *   get:
  *     summary: Get posts by author

@@ -12,6 +12,7 @@ const PostRouter_1 = __importDefault(require("./router/PostRouter"));
 const CommentRouter_1 = __importDefault(require("./router/CommentRouter"));
 const CategoryRouter_1 = __importDefault(require("./router/CategoryRouter"));
 const PollRouter_1 = __importDefault(require("./router/PollRouter"));
+const NewsletterRouter_1 = __importDefault(require("./router/NewsletterRouter"));
 require("reflect-metadata");
 const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
@@ -31,7 +32,8 @@ app.use("/auth", UserRouter_1.default);
 app.use("/posts", PostRouter_1.default);
 app.use("/comment", CommentRouter_1.default);
 app.use("/category", CategoryRouter_1.default);
-app.use("/poll", PollRouter_1.default);
+app.use("/polls", PollRouter_1.default);
+app.use("/news-letter", NewsletterRouter_1.default);
 //render the html file
 app.get('/', (req, res) => {
     res.sendFile("build" + '/public/index.html');
