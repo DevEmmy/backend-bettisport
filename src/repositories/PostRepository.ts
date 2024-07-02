@@ -100,6 +100,10 @@ class PostRepository {
         return await this.model.find({featured: true})
     }
 
+    async findArticles() {
+        return await this.model.find({article: true})
+    }
+
     
 }
 

@@ -114,4 +114,22 @@ export class PostService {
             throw new Error(err.message);
         }
     }
+
+    async findPostsByArticles() {
+        try {
+            const posts = await this.repo.findArticles();
+            return posts;
+        } catch (err: any) {
+            throw new Error(err.message);
+        }
+    }
+
+    async findPostsByCategories(categories: string[]) {
+        try {
+            const posts = await this.repo.getPostsByCategories(categories);
+            return posts;
+        } catch (err: any) {
+            throw new Error(err.message);
+        }
+    }
 }

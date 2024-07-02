@@ -107,6 +107,15 @@ export class PostController {
         }
     }
 
+    async findPostsByArticles(req: Request, res: Response) {
+        try {
+            const posts = await this.service.findPostsByArticles();
+            return success(posts, res);
+        } catch (err: any) {
+            error(err.message, res, err.status || 400);
+        }
+    }
+
     async findPostsByMostRead(req: Request, res: Response) {
         try {
             const posts = await this.service.findPostsByMostRead();

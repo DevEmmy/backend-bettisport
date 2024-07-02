@@ -27,7 +27,8 @@ const schema = new Schema({
     newsBreaking: {type: Boolean, default: false},
     comments: {type: Schema.Types.ObjectId, ref: "Comment"},
     reads: {type: Number, default: 0},
-    featured: {type: Boolean, default: false}
+    featured: {type: Boolean, default: false},
+    article: {type: Boolean, default: false}
 })
 
 const Post = mongoose.model("Post", schema);
