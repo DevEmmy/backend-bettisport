@@ -34,10 +34,7 @@ app.use("/comment", CommentRouter_1.default);
 app.use("/category", CategoryRouter_1.default);
 app.use("/polls", PollRouter_1.default);
 app.use("/news-letter", NewsletterRouter_1.default);
-//render the html file
-app.get('/', (req, res) => {
-    res.sendFile("build" + '/public/index.html');
-});
+//render the html fil
 const options = {
     definition: {
         openapi: "3.1.0",

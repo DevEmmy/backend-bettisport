@@ -35,11 +35,7 @@ app.use("/category", categoryRouter)
 app.use("/polls", pollRouter)
 app.use("/news-letter", newsletterRouter)
 
-//render the html file
-app.get('/', (req, res) => {
-  res.sendFile("build" + '/public/index.html');
-});
-
+//render the html fil
 const options = {
   definition: {
     openapi: "3.1.0",
