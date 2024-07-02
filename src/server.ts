@@ -8,6 +8,7 @@ import postRouter from "./router/PostRouter"
 import commentRouter from './router/CommentRouter';
 import categoryRouter from './router/CategoryRouter';
 import pollRouter from './router/PollRouter';
+import newsletterRouter from './router/NewsletterRouter';
 import "reflect-metadata";
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from "swagger-ui-express"
@@ -31,7 +32,8 @@ app.use("/auth", userRouter)
 app.use("/posts", postRouter)
 app.use("/comment", commentRouter)
 app.use("/category", categoryRouter)
-app.use("/poll", pollRouter)
+app.use("/polls", pollRouter)
+app.use("/news-letter", newsletterRouter)
 
 //render the html file
 app.get('/', (req, res) => {
