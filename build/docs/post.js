@@ -320,8 +320,7 @@
  *       500:
  *         description: Some server error
  *
- *
- *  /posts/class/fantasy:
+ * /posts/class/fantasy:
  *   get:
  *     summary: Get fantasy posts
  *     tags: [Posts]
@@ -336,7 +335,6 @@
  *                 $ref: '#/components/schemas/Post'
  *       500:
  *         description: Some server error
- *
  *
  * /posts/author/{authorId}:
  *   get:
