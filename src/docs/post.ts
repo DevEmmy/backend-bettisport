@@ -287,6 +287,56 @@
  *       500:
  *         description: Some server error
  * 
+ * /posts/class/photo-splash:
+ *   get:
+ *     summary: Get photo-splash posts
+ *     tags: [Posts]
+ *     responses:
+ *       200:
+ *         description: Successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Post'
+ *       500:
+ *         description: Some server error
+ * 
+ * /posts/class/in-focus:
+ *   get:
+ *     summary: Get in-focus posts
+ *     tags: [Posts]
+ *     responses:
+ *       200:
+ *         description: Successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Post'
+ *       500:
+ *         description: Some server error
+ * 
+ * 
+ *  /posts/class/fantasy:
+ *   get:
+ *     summary: Get fantasy posts
+ *     tags: [Posts]
+ *     responses:
+ *       200:
+ *         description: Successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Post'
+ *       500:
+ *         description: Some server error
+ * 
+ * 
  * /posts/author/{authorId}:
  *   get:
  *     summary: Get posts by author

@@ -16,6 +16,7 @@ postRouter.get("/class/featured", (req: Request, res: Response) => postControlle
 postRouter.get("/class/articles", (req: Request, res: Response) => postController.findPostsByArticles(req, res));
 postRouter.get("/class/photo-splash", (req: Request, res: Response) => postController.findPostsByPhotoSplash(req, res));
 postRouter.get("/class/in-focus", (req: Request, res: Response) => postController.findPostsByInFocus(req, res));
+postRouter.get("/class/fantasy", (req: Request, res: Response) => postController.findPostsByFantasy(req, res));
 postRouter.put("/:id", (req: Request, res: Response) => postController.updatePost(req, res));
 postRouter.delete("/:id", (req: Request, res: Response) => postController.deletePost(req, res));
 postRouter.get("/author/:authorId", (req: Request, res: Response) => postController.findPostsByAuthor(req, res));

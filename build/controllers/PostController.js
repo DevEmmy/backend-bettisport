@@ -196,6 +196,17 @@ let PostController = exports.PostController = class PostController {
             }
         });
     }
+    findPostsByFantasy(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const posts = yield this.service.findPostsByFantasy();
+                return (0, response_1.success)(posts, res);
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
 };
 exports.PostController = PostController = __decorate([
     (0, typedi_1.Service)(),

@@ -142,6 +142,15 @@ export class PostService {
         }
     }
 
+    async findPostsByFantasy() {
+        try {
+            const posts = await this.repo.findFantasy();
+            return posts;
+        } catch (err: any) {
+            throw new Error(err.message);
+        }
+    }
+
     async findPostsByCategories(categories: string[]) {
         try {
             const posts = await this.repo.getPostsByCategories(categories);

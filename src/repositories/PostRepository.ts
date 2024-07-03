@@ -111,6 +111,10 @@ class PostRepository {
     async findInFocus() {
         return await this.model.find({inFocus: true})
     }
+
+    async findFantasy() {
+        return await this.model.find({fantasy: true})
+    }
 }
 
 export default PostRepository;

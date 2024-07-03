@@ -192,6 +192,17 @@ let PostService = exports.PostService = class PostService {
             }
         });
     }
+    findPostsByFantasy() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const posts = yield this.repo.findFantasy();
+                return posts;
+            }
+            catch (err) {
+                throw new Error(err.message);
+            }
+        });
+    }
     findPostsByCategories(categories) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

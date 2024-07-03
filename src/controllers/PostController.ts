@@ -152,6 +152,15 @@ export class PostController {
         }
     }
 
+    async findPostsByFantasy(req: Request, res: Response) {
+        try {
+            const posts = await this.service.findPostsByFantasy();
+            return success(posts, res);
+        } catch (err: any) {
+            error(err.message, res, err.status || 400);
+        }
+    }
+
     // Uncomment and implement this method if you want to find posts by slug
     // async findPostsBySlug(req: Request, res: Response) {
     //     try {
