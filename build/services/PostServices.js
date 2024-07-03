@@ -170,6 +170,28 @@ let PostService = exports.PostService = class PostService {
             }
         });
     }
+    findPostsByPhotoSplash() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const posts = yield this.repo.findPhotoSplash();
+                return posts;
+            }
+            catch (err) {
+                throw new Error(err.message);
+            }
+        });
+    }
+    findPostsByInFocus() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const posts = yield this.repo.findInFocus();
+                return posts;
+            }
+            catch (err) {
+                throw new Error(err.message);
+            }
+        });
+    }
     findPostsByCategories(categories) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

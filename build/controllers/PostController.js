@@ -152,6 +152,28 @@ let PostController = exports.PostController = class PostController {
             }
         });
     }
+    findPostsByPhotoSplash(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const posts = yield this.service.findPostsByPhotoSplash();
+                return (0, response_1.success)(posts, res);
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
+    findPostsByInFocus(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const posts = yield this.service.findPostsByInFocus();
+                return (0, response_1.success)(posts, res);
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
     findPostsByMostRead(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

@@ -104,7 +104,13 @@ class PostRepository {
         return await this.model.find({article: true})
     }
 
-    
+    async findPhotoSplash() {
+        return await this.model.find({photoSplash: true})
+    }
+
+    async findInFocus() {
+        return await this.model.find({inFocus: true})
+    }
 }
 
 export default PostRepository;

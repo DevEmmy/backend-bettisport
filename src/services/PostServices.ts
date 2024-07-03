@@ -124,6 +124,24 @@ export class PostService {
         }
     }
 
+    async findPostsByPhotoSplash() {
+        try {
+            const posts = await this.repo.findPhotoSplash();
+            return posts;
+        } catch (err: any) {
+            throw new Error(err.message);
+        }
+    }   
+
+    async findPostsByInFocus() {
+        try {
+            const posts = await this.repo.findInFocus();
+            return posts;
+        } catch (err: any) {
+            throw new Error(err.message);
+        }
+    }
+
     async findPostsByCategories(categories: string[]) {
         try {
             const posts = await this.repo.getPostsByCategories(categories);

@@ -116,6 +116,24 @@ export class PostController {
         }
     }
 
+    async findPostsByPhotoSplash(req: Request, res: Response) {
+        try {
+            const posts = await this.service.findPostsByPhotoSplash();
+            return success(posts, res);
+        } catch (err: any) {
+            error(err.message, res, err.status || 400);
+        }
+    }
+
+    async findPostsByInFocus(req: Request, res: Response) {
+        try {
+            const posts = await this.service.findPostsByInFocus();
+            return success(posts, res);
+        } catch (err: any) {
+            error(err.message, res, err.status || 400);
+        }
+    }
+
     async findPostsByMostRead(req: Request, res: Response) {
         try {
             const posts = await this.service.findPostsByMostRead();

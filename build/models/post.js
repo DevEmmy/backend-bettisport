@@ -44,7 +44,7 @@ const schema = new mongoose_1.Schema({
     featuredImage: { type: String },
     nationality: { type: String },
     highlight: { type: String },
-    photoSplash: { type: String },
+    photoSplash: { type: Boolean, default: false },
     slug: String,
     fantasy: { type: Boolean, default: false },
     editorsPick: { type: Boolean, default: false },
@@ -52,7 +52,8 @@ const schema = new mongoose_1.Schema({
     comments: { type: mongoose_1.Schema.Types.ObjectId, ref: "Comment" },
     reads: { type: Number, default: 0 },
     featured: { type: Boolean, default: false },
-    article: { type: Boolean, default: false }
+    article: { type: Boolean, default: false },
+    inFocus: { type: Boolean, default: false }
 });
 const Post = mongoose_1.default.model("Post", schema);
 exports.default = Post;

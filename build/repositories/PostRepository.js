@@ -133,6 +133,16 @@ let PostRepository = class PostRepository {
             return yield this.model.find({ article: true });
         });
     }
+    findPhotoSplash() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.model.find({ photoSplash: true });
+        });
+    }
+    findInFocus() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.model.find({ inFocus: true });
+        });
+    }
 };
 PostRepository = __decorate([
     (0, typedi_1.Service)(),
