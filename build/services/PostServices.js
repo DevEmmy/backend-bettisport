@@ -25,6 +25,7 @@ exports.PostService = void 0;
 const typedi_1 = require("typedi");
 const PostRepository_1 = __importDefault(require("../repositories/PostRepository"));
 require("reflect-metadata");
+const uploader_1 = require("../utils/uploader");
 let PostService = exports.PostService = class PostService {
     constructor(repo) {
         this.repo = repo;
@@ -32,6 +33,12 @@ let PostService = exports.PostService = class PostService {
     createPost(data) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                if (data.media) {
+                    data.media = yield (0, uploader_1.uploader)(data.media);
+                }
+                if (data.featuredImage) {
+                    data.featuredImage = yield (0, uploader_1.uploader)(data.featuredImage);
+                }
                 const post = yield this.repo.create(data);
                 return post;
             }

@@ -2,6 +2,7 @@ import { Service } from "typedi";
 import PostRepository from "../repositories/PostRepository";
 import { PostDto, UpdatePostDto } from "../dto/post-dto";
 import "reflect-metadata";
+import { uploader } from "../utils/uploader";
 
 @Service()
 export class PostService {
@@ -9,6 +10,13 @@ export class PostService {
 
     async createPost(data: PostDto) {
         try {
+            if(data.media){
+                data.media = await uploader(data.media as string)
+            }
+            
+            if(data.featuredImage){
+                data.featuredImage = await uploader(data.featuredImage as string)
+            }
             const post = await this.repo.create(data);
             return post;
         } catch (err: any) {
