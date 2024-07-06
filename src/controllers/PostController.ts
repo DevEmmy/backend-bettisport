@@ -14,6 +14,7 @@ export class PostController {
     async createPost(req: Request, res: Response) {
         try {
             const body: PostDto = req.body;
+            body.author = req.body.user
             const post = await this.service.createPost(body);
             return success(post, res);
         } catch (err: any) {

@@ -31,6 +31,7 @@ let PostController = exports.PostController = class PostController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const body = req.body;
+                body.author = req.body.user;
                 const post = yield this.service.createPost(body);
                 return (0, response_1.success)(post, res);
             }

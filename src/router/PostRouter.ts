@@ -1,11 +1,12 @@
 import Container from "typedi";
 import { PostController } from "../controllers/PostController";
 import Router, { Request, Response } from "express";
+import { verifyAuth } from "../middleware/verifyAuth";
 
 const postRouter = Router();
 const postController = Container.get(PostController);
 
-postRouter.post("/", (req: Request, res: Response) => postController.createPost(req, res));
+postRouter.post("/", verifyAuth ,(req: Request, res: Response) => postController.createPost(req, res));
 postRouter.get("/:id", (req: Request, res: Response) => postController.getPostById(req, res));
 postRouter.get("/", (req: Request, res: Response) => postController.getAllPosts(req, res));
 postRouter.get("/class/editors", (req: Request, res: Response) => postController.findPostsByEditorsPick(req, res));
