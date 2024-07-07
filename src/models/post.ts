@@ -30,6 +30,9 @@ const schema = new Schema({
     featured: {type: Boolean, default: false},
     article: {type: Boolean, default: false},
     inFocus: {type: Boolean, default: false}
+},
+{
+    timestamps: true
 })
 
 const Post = mongoose.model("Post", schema);

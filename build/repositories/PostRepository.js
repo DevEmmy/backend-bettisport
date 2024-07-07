@@ -36,13 +36,13 @@ let PostRepository = class PostRepository {
     }
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.findById(id);
+            const result = yield this.model.findById(id).populate("author");
             return result;
         });
     }
     findAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.find();
+            const result = yield this.model.find().populate("author");
             return result;
         });
     }
@@ -60,26 +60,26 @@ let PostRepository = class PostRepository {
     }
     findByAuthor(authorId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.find({ author: authorId });
+            const result = yield this.model.find({ author: authorId }).populate("author");
             return result;
         });
     }
     searchByTitleOrContent(query) {
         return __awaiter(this, void 0, void 0, function* () {
             const regex = new RegExp(query, 'i'); // Case-insensitive regex
-            const result = yield this.model.find({ $or: [{ title: regex }, { content: regex }] });
+            const result = yield this.model.find({ $or: [{ title: regex }, { content: regex }] }).populate("author");
             return result;
         });
     }
     findPublishedPosts() {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.find({ publish: true });
+            const result = yield this.model.find({ publish: true }).populate("author");
             return result;
         });
     }
     updatePartial(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.findByIdAndUpdate(id, { $set: data }, { new: true });
+            const result = yield this.model.findByIdAndUpdate(id, { $set: data }, { new: true }).populate("author");
             return result;
         });
     }
@@ -97,55 +97,55 @@ let PostRepository = class PostRepository {
     }
     getPostsByCategories(categories) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.find({ categories: { $in: categories } });
+            const result = yield this.model.find({ categories: { $in: categories } }).populate("author");
             return result;
         });
     }
     getPostsByNewsBreaking() {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.find({ newsBreaking: true });
+            const result = yield this.model.find({ newsBreaking: true }).populate("author");
             return result;
         });
     }
     getPostsByEditorsPick() {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.find({ editorsPick: true });
+            const result = yield this.model.find({ editorsPick: true }).populate("author");
             return result;
         });
     }
     findMostRead() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.model.find().sort({ reads: -1 }).exec();
+            return yield this.model.find().populate("author").sort({ reads: -1 }).exec();
         });
     }
     findMostInteracted() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.model.find().sort({ comments: -1 }).exec();
+            return yield this.model.find().populate("author").sort({ comments: -1 }).exec();
         });
     }
     findFeatured() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.model.find({ featured: true });
+            return yield this.model.find({ featured: true }).populate("author");
         });
     }
     findArticles() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.model.find({ article: true });
+            return yield this.model.find({ article: true }).populate("author");
         });
     }
     findPhotoSplash() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.model.find({ photoSplash: true });
+            return yield this.model.find({ photoSplash: true }).populate("author");
         });
     }
     findInFocus() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.model.find({ inFocus: true });
+            return yield this.model.find({ inFocus: true }).populate("author");
         });
     }
     findFantasy() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.model.find({ fantasy: true });
+            return yield this.model.find({ fantasy: true }).populate("author");
         });
     }
 };

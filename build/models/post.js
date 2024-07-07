@@ -54,6 +54,8 @@ const schema = new mongoose_1.Schema({
     featured: { type: Boolean, default: false },
     article: { type: Boolean, default: false },
     inFocus: { type: Boolean, default: false }
+}, {
+    timestamps: true
 });
 const Post = mongoose_1.default.model("Post", schema);
 exports.default = Post;

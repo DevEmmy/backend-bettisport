@@ -15,12 +15,12 @@ class PostRepository {
     }
 
     async findById(id: string) {
-        const result = await this.model.findById(id);
+        const result = await this.model.findById(id).populate("author");
         return result;
     }
 
     async findAll() {
-        const result: PostDto[] = await this.model.find();
+        const result = await this.model.find().populate("author");
         return result;
     }
 
@@ -35,23 +35,23 @@ class PostRepository {
     }
 
     async findByAuthor(authorId: string) {
-        const result = await this.model.find({ author: authorId });
+        const result = await this.model.find({ author: authorId }).populate("author");
         return result;
     }
 
     async searchByTitleOrContent(query: string) {
         const regex = new RegExp(query, 'i'); // Case-insensitive regex
-        const result = await this.model.find({ $or: [{ title: regex }, { content: regex }] });
+        const result = await this.model.find({ $or: [{ title: regex }, { content: regex }] }).populate("author");
         return result;
     }
 
     async findPublishedPosts() {
-        const result = await this.model.find({ publish: true });
+        const result = await this.model.find({ publish: true }).populate("author");
         return result;
     }
 
     async updatePartial(id: string, data: Partial<UpdatePostDto>) {
-        const result = await this.model.findByIdAndUpdate(id, { $set: data }, { new: true });
+        const result = await this.model.findByIdAndUpdate(id, { $set: data }, { new: true }).populate("author");
         return result;
     }
 
@@ -74,46 +74,46 @@ class PostRepository {
     }
 
     async getPostsByCategories(categories: string[]) {
-        const result = await this.model.find({ categories: { $in: categories } });
+        const result = await this.model.find({ categories: { $in: categories } }).populate("author");
         return result;
     }
 
     async getPostsByNewsBreaking() {
-        const result = await this.model.find({newsBreaking: true });
+        const result = await this.model.find({newsBreaking: true }).populate("author");
         return result;
     }
 
     async getPostsByEditorsPick() {
-        const result = await this.model.find({editorsPick: true });
+        const result = await this.model.find({editorsPick: true }).populate("author");
         return result;
     }
 
     async findMostRead() {
-        return await this.model.find().sort({ reads: -1 }).exec();
+        return await this.model.find().populate("author").sort({ reads: -1 }).exec();
     }
 
     async findMostInteracted() {
-        return await this.model.find().sort({ comments: -1 }).exec();
+        return await this.model.find().populate("author").sort({ comments: -1 }).exec();
     }
 
     async findFeatured() {
-        return await this.model.find({featured: true})
+        return await this.model.find({featured: true}).populate("author")
     }
 
     async findArticles() {
-        return await this.model.find({article: true})
+        return await this.model.find({article: true}).populate("author")
     }
 
     async findPhotoSplash() {
-        return await this.model.find({photoSplash: true})
+        return await this.model.find({photoSplash: true}).populate("author")
     }
 
     async findInFocus() {
-        return await this.model.find({inFocus: true})
+        return await this.model.find({inFocus: true}).populate("author")
     }
 
     async findFantasy() {
-        return await this.model.find({fantasy: true})
+        return await this.model.find({fantasy: true}).populate("author")
     }
 }
 
