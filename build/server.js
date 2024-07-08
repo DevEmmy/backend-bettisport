@@ -33,7 +33,7 @@ app.use("/posts", PostRouter_1.default);
 app.use("/comments", CommentRouter_1.default);
 app.use("/categories", CategoryRouter_1.default);
 app.use("/polls", PollRouter_1.default);
-app.use("/news-letter", NewsletterRouter_1.default);
+app.use("/newsletter", NewsletterRouter_1.default);
 //render the html fil
 const options = {
     definition: {

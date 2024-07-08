@@ -33,7 +33,7 @@ app.use("/posts", postRouter)
 app.use("/comments", commentRouter)
 app.use("/categories", categoryRouter)
 app.use("/polls", pollRouter)
-app.use("/news-letter", newsletterRouter)
+app.use("/newsletter", newsletterRouter)
 
 //render the html fil
 const options = {
