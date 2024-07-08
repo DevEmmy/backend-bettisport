@@ -14,6 +14,7 @@ export class CommentController {
     async createComment(req: Request, res: Response) {
         try {
             const body: CommentDto = req.body;
+            body.author = req.body.user
             const comment = await this.service.createComment(body);
             return success(comment, res);
         } catch (err: any) {

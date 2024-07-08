@@ -14,6 +14,7 @@ export class PollController {
     async createPoll(req: Request, res: Response) {
         try {
             const body: PollDto = req.body;
+            body.author = req.body.user
             const poll = await this.service.createPoll(body);
             return success(poll, res);
         } catch (err: any) {

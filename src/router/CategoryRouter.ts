@@ -1,11 +1,12 @@
 import Container from "typedi";
 import { CategoryController } from "../controllers/CategoryController";
 import Router, { Request, Response } from "express";
+import { verifyAuth } from "../middleware/verifyAuth";
 
 const categoryRouter = Router();
 const categoryController = Container.get(CategoryController);
 
-categoryRouter.post("/", (req: Request, res: Response) => categoryController.createCategory(req, res));
+categoryRouter.post("/", verifyAuth, (req: Request, res: Response) => categoryController.createCategory(req, res));
 categoryRouter.post("/add-multiple", (req: Request, res: Response) => categoryController.addMultiple(req, res));
 categoryRouter.get("/:id", (req: Request, res: Response) => categoryController.getCategoryById(req, res));
 categoryRouter.get("/", (req: Request, res: Response) => categoryController.getAllCategories(req, res));

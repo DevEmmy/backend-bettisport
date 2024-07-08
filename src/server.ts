@@ -30,8 +30,8 @@ connection.once('open', () => { console.log('Database running Successfully') });
 
 app.use("/auth", userRouter)
 app.use("/posts", postRouter)
-app.use("/comment", commentRouter)
-app.use("/category", categoryRouter)
+app.use("/comments", commentRouter)
+app.use("/categories", categoryRouter)
 app.use("/polls", pollRouter)
 app.use("/news-letter", newsletterRouter)
 

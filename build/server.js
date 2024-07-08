@@ -30,8 +30,8 @@ const connection = mongoose_1.default.connection;
 connection.once('open', () => { console.log('Database running Successfully'); });
 app.use("/auth", UserRouter_1.default);
 app.use("/posts", PostRouter_1.default);
-app.use("/comment", CommentRouter_1.default);
-app.use("/category", CategoryRouter_1.default);
+app.use("/comments", CommentRouter_1.default);
+app.use("/categories", CategoryRouter_1.default);
 app.use("/polls", PollRouter_1.default);
 app.use("/news-letter", NewsletterRouter_1.default);
 //render the html fil

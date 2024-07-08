@@ -1,11 +1,12 @@
 import Container from "typedi";
 import { PollController } from "../controllers/PollController";
 import Router, { Request, Response } from "express";
+import { verifyAuth } from "../middleware/verifyAuth";
 
 const pollRouter = Router();
 const pollController = Container.get(PollController);
 
-pollRouter.post("/", (req: Request, res: Response) => pollController.createPoll(req, res));
+pollRouter.post("/", verifyAuth, (req: Request, res: Response) => pollController.createPoll(req, res));
 pollRouter.get("/:id", (req: Request, res: Response) => pollController.getPollById(req, res));
 pollRouter.get("/", (req: Request, res: Response) => pollController.getAllPolls(req, res));
 pollRouter.put("/:id", (req: Request, res: Response) => pollController.updatePoll(req, res));

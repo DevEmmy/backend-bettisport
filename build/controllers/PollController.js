@@ -31,6 +31,7 @@ let PollController = exports.PollController = class PollController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const body = req.body;
+                body.author = req.body.user;
                 const poll = yield this.service.createPoll(body);
                 return (0, response_1.success)(poll, res);
             }
