@@ -12,7 +12,7 @@ import newsletterRouter from './router/NewsletterRouter';
 import "reflect-metadata";
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from "swagger-ui-express"
-
+require("dotenv").config
 const app = express();
 const port = String(process.env.PORT) || 3030;
 
@@ -24,7 +24,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb' }))
 
 // Run MongoDB
-mongoose.connect(process.env.MONGODB_URI || `mongodb://127.0.0.1:27017/backend-bettisport`)
+mongoose.connect(process.env.MONGODB_URI as string)
 const connection = mongoose.connection
 connection.once('open', () => { console.log('Database running Successfully') });
 

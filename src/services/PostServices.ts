@@ -3,6 +3,7 @@ import PostRepository from "../repositories/PostRepository";
 import { PostDto, UpdatePostDto } from "../dto/post-dto";
 import "reflect-metadata";
 import { uploader } from "../utils/uploader";
+import { listeners } from "process";
 
 @Service()
 export class PostService {
@@ -10,11 +11,11 @@ export class PostService {
 
     async createPost(data: PostDto) {
         try {
-            if(data.media){
+            if (data.media) {
                 data.media = await uploader(data.media as string)
             }
-            
-            if(data.featuredImage){
+
+            if (data.featuredImage) {
                 data.featuredImage = await uploader(data.featuredImage as string)
             }
             const post = await this.repo.create(data);
@@ -139,7 +140,7 @@ export class PostService {
         } catch (err: any) {
             throw new Error(err.message);
         }
-    }   
+    }
 
     async findPostsByInFocus() {
         try {
@@ -163,6 +164,22 @@ export class PostService {
         try {
             const posts = await this.repo.getPostsByCategories(categories);
             return posts;
+        } catch (err: any) {
+            throw new Error(err.message);
+        }
+    }
+
+    async readPost(id: string) {
+        try {
+            let post = await this.repo.findById(id);
+            if (post) {
+                post.reads = post.reads + 1
+                console.log(post.reads)
+                let data = { reads: post.reads }
+
+                post = await this.repo.update(id, data)
+                return post;
+            }
         } catch (err: any) {
             throw new Error(err.message);
         }

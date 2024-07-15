@@ -8,6 +8,7 @@ const postController = Container.get(PostController);
 
 postRouter.post("/", verifyAuth ,(req: Request, res: Response) => postController.createPost(req, res));
 postRouter.get("/:id", (req: Request, res: Response) => postController.getPostById(req, res));
+postRouter.get("/read/:id", (req: Request, res: Response) => postController.readPost(req, res));
 postRouter.get("/", (req: Request, res: Response) => postController.getAllPosts(req, res));
 postRouter.get("/class/editors", (req: Request, res: Response) => postController.findPostsByEditorsPick(req, res));
 postRouter.get("/class/trending", (req: Request, res: Response) => postController.findPostsByMostRead(req, res));
