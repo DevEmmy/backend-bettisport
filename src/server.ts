@@ -12,6 +12,8 @@ import newsletterRouter from './router/NewsletterRouter';
 import "reflect-metadata";
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from "swagger-ui-express"
+import feedsRouter from "./router/FeedRouter"
+
 require("dotenv").config
 const app = express();
 const port = String(process.env.PORT) || 3030;
@@ -34,6 +36,7 @@ app.use("/comments", commentRouter)
 app.use("/categories", categoryRouter)
 app.use("/polls", pollRouter)
 app.use("/newsletter", newsletterRouter)
+app.use("/feeds", feedsRouter)
 
 //render the html fil
 const options = {
