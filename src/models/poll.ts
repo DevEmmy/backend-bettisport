@@ -1,7 +1,9 @@
 import mongoose, { Schema } from "mongoose";
+import { v4 as uuidv4 } from "uuid";
 
 // Define a sub-schema for choices to store votes and users who voted
 const choiceSchema = new Schema({
+    choiceId: { type: String, default: uuidv4 },
     choiceText: String,
     votes: { type: Number, default: 0 },
     voters: [{ type: Schema.Types.ObjectId, ref: "User" }]
