@@ -24,8 +24,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
+const uuid_1 = require("uuid");
 // Define a sub-schema for choices to store votes and users who voted
 const choiceSchema = new mongoose_1.Schema({
+    choiceId: { type: String, default: uuid_1.v4 },
     choiceText: String,
     votes: { type: Number, default: 0 },
     voters: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "User" }]

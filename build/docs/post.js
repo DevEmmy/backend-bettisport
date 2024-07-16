@@ -224,6 +224,21 @@
  *       500:
  *         description: Some server error
  *
+ * /posts/read/{id}:
+ *   get:
+ *     summary: Read a post
+ *     tags: [Posts]
+ *     responses:
+ *       200:
+ *         description: Successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Post'
+ *
+ *       500:
+ *         description: Some server error
+ *
  * /posts/class/popular:
  *   get:
  *     summary: Get popular posts

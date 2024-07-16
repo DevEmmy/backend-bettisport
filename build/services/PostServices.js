@@ -221,6 +221,23 @@ let PostService = exports.PostService = class PostService {
             }
         });
     }
+    readPost(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let post = yield this.repo.findById(id);
+                if (post) {
+                    post.reads = post.reads + 1;
+                    console.log(post.reads);
+                    let data = { reads: post.reads };
+                    post = yield this.repo.update(id, data);
+                    return post;
+                }
+            }
+            catch (err) {
+                throw new Error(err.message);
+            }
+        });
+    }
 };
 exports.PostService = PostService = __decorate([
     (0, typedi_1.Service)(),

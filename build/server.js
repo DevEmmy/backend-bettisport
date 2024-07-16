@@ -16,6 +16,8 @@ const NewsletterRouter_1 = __importDefault(require("./router/NewsletterRouter"))
 require("reflect-metadata");
 const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
+const FeedRouter_1 = __importDefault(require("./router/FeedRouter"));
+require("dotenv").config;
 const app = (0, express_1.default)();
 const port = String(process.env.PORT) || 3030;
 // Set up your routes and middleware here
@@ -25,7 +27,7 @@ app.use((0, cors_1.default)({
 app.use(express_1.default.json({ limit: '50mb' }));
 app.use(express_1.default.urlencoded({ limit: '50mb' }));
 // Run MongoDB
-mongoose_1.default.connect(process.env.MONGODB_URI || `mongodb://127.0.0.1:27017/backend-bettisport`);
+mongoose_1.default.connect(process.env.MONGODB_URI);
 const connection = mongoose_1.default.connection;
 connection.once('open', () => { console.log('Database running Successfully'); });
 app.use("/auth", UserRouter_1.default);
@@ -34,6 +36,7 @@ app.use("/comments", CommentRouter_1.default);
 app.use("/categories", CategoryRouter_1.default);
 app.use("/polls", PollRouter_1.default);
 app.use("/newsletter", NewsletterRouter_1.default);
+app.use("/feeds", FeedRouter_1.default);
 //render the html fil
 const options = {
     definition: {

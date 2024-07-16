@@ -208,6 +208,18 @@ let PostController = exports.PostController = class PostController {
             }
         });
     }
+    readPost(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let { id } = req.params;
+                const posts = yield this.service.readPost(id);
+                return (0, response_1.success)(posts, res);
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
 };
 exports.PostController = PostController = __decorate([
     (0, typedi_1.Service)(),

@@ -11,6 +11,7 @@ const postRouter = (0, express_1.default)();
 const postController = typedi_1.default.get(PostController_1.PostController);
 postRouter.post("/", verifyAuth_1.verifyAuth, (req, res) => postController.createPost(req, res));
 postRouter.get("/:id", (req, res) => postController.getPostById(req, res));
+postRouter.get("/read/:id", (req, res) => postController.readPost(req, res));
 postRouter.get("/", (req, res) => postController.getAllPosts(req, res));
 postRouter.get("/class/editors", (req, res) => postController.findPostsByEditorsPick(req, res));
 postRouter.get("/class/trending", (req, res) => postController.findPostsByMostRead(req, res));
