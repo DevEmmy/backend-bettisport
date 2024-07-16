@@ -11,6 +11,7 @@ export class FeedController {
     async create(req: Request, res: Response): Promise<void> {
         try {
             const feed: IFeed = req.body;
+            feed.postedBy = req.body.user
             const newFeed = await this.feedService.create(feed);
             res.status(201).json(newFeed);
         } catch (error: any) {
