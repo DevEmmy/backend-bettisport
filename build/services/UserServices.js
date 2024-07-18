@@ -139,6 +139,17 @@ let UserServices = exports.UserServices = class UserServices {
             }
         });
     }
+    findAll() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let payload = yield this.repo.findAll();
+                return { payload };
+            }
+            catch (err) {
+                throw Error(err.message);
+            }
+        });
+    }
 };
 exports.UserServices = UserServices = __decorate([
     (0, typedi_1.Service)(),

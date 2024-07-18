@@ -119,6 +119,17 @@ let UserController = exports.UserController = class UserController {
             }
         });
     }
+    getAllUsers(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let { payload } = yield this.service.findAll();
+                return (0, response_1.success)(payload, res);
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
 };
 exports.UserController = UserController = __decorate([
     (0, typedi_1.Service)(),

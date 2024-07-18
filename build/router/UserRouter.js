@@ -14,4 +14,5 @@ router.patch("/like/:postId", (req, res) => userController.likePost(req, res));
 router.patch("/save/:postId", (req, res) => userController.savePost(req, res));
 router.get("/likes-and-saved/:userId", (req, res) => userController.getLikedAndSaved(req, res));
 router.get("/:role", (req, res) => userController.filterByRole(req, res));
+router.get("/", (req, res) => userController.getAllUsers(req, res));
 exports.default = router;

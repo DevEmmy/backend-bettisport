@@ -118,4 +118,13 @@ export class UserServices {
     }
 
 
+    async findAll(){
+        try{
+            let payload : userDto[] = await this.repo.findAll();
+            return {payload}
+        }
+        catch (err: any) {
+            throw Error(err.message);
+        }
+    }
 }

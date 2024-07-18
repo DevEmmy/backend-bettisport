@@ -97,4 +97,15 @@ export class UserController{
             error(err.message, res, err.status||400);
         }
     }
+
+    async getAllUsers(req: Request, res: Response){
+        try{
+            
+            let {payload} = await this.service.findAll();
+            return success(payload, res);
+        }   
+        catch(err: any){
+            error(err.message, res, err.status||400);
+        }
+    }
 }
