@@ -29,12 +29,27 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 require("reflect-metadata");
 const typedi_1 = require("typedi");
 const mongoose_1 = __importDefault(require("mongoose"));
+const EmailServices_1 = __importDefault(require("./EmailServices"));
 let jwtSecret = process.env.JWT_SECRET;
 let UserServices = exports.UserServices = class UserServices {
-    constructor(repo) {
+    constructor(repo, emailService) {
         this.repo = repo;
+        this.emailService = emailService;
     }
     ;
+    createUser(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let { email, password } = user;
+            let checkUser = yield this.repo.findByEmail(email);
+            if (checkUser) {
+                return { message: "User with this email already exists.", payload: null };
+            }
+            user.password = yield bcrypt_1.default.hash(password, 8);
+            user = yield this.repo.create(user);
+            yield this.emailService.getLoginCredentials(email, password);
+            return { payload: user, message: "User Created" };
+        });
+    }
     generateToken(id) {
         let token = jsonwebtoken_1.default.sign({ id }, jwtSecret);
         return token;
@@ -153,5 +168,5 @@ let UserServices = exports.UserServices = class UserServices {
 };
 exports.UserServices = UserServices = __decorate([
     (0, typedi_1.Service)(),
-    __metadata("design:paramtypes", [UserRepository_1.default])
+    __metadata("design:paramtypes", [UserRepository_1.default, EmailServices_1.default])
 ], UserServices);

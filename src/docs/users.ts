@@ -158,6 +158,35 @@
  *       500:
  *         description: Some server error
  * 
+ * /auth:
+ *   post:
+ *     summary: To create user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Some server error
+ * 
  * /auth/likes-and-saved/{userId}:
  *   get:
  *     summary: To get liked and saved posts of a user

@@ -27,6 +27,21 @@ let UserController = exports.UserController = class UserController {
     constructor(service) {
         this.service = service;
     }
+    createUser(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const body = req.body;
+                let { payload, message } = yield this.service.createUser(body);
+                if (!payload && message) {
+                    return (0, response_1.error)(message, res, 400);
+                }
+                return (0, response_1.success)(payload, res);
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
     signUp(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
