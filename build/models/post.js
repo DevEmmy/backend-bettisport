@@ -36,6 +36,7 @@ const schema = new mongoose_1.Schema({
     media: String,
     publish: { type: Boolean, default: false },
     categories: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "Category" }],
+    likes: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "User" }],
     menCategories: [{ type: String }],
     womenCategories: [{ type: String }],
     excerpt: String,

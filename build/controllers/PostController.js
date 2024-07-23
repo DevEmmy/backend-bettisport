@@ -220,6 +220,29 @@ let PostController = exports.PostController = class PostController {
             }
         });
     }
+    // Uncomment and implement this method if you want to find posts by slug
+    // async findPostsBySlug(req: Request, res: Response) {
+    //     try {
+    //         const { slug } = req.params;
+    //         const posts = await this.service.findPostsBySlug(slug);
+    //         return success(posts, res);
+    //     } catch (err: any) {
+    //         error(err.message, res, err.status || 400);
+    //     }
+    // }
+    likePost(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let { id } = req.params;
+                const userId = req.body.user._id;
+                const post = yield this.service.likePost(id, userId);
+                return (0, response_1.success)(post, res);
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
 };
 exports.PostController = PostController = __decorate([
     (0, typedi_1.Service)(),

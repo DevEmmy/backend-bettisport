@@ -26,6 +26,7 @@ const typedi_1 = require("typedi");
 const PostRepository_1 = __importDefault(require("../repositories/PostRepository"));
 require("reflect-metadata");
 const uploader_1 = require("../utils/uploader");
+const mongoose_1 = __importDefault(require("mongoose"));
 let PostService = exports.PostService = class PostService {
     constructor(repo) {
         this.repo = repo;
@@ -229,6 +230,22 @@ let PostService = exports.PostService = class PostService {
                     post.reads = post.reads + 1;
                     console.log(post.reads);
                     let data = { reads: post.reads };
+                    post = yield this.repo.update(id, data);
+                    return post;
+                }
+            }
+            catch (err) {
+                throw new Error(err.message);
+            }
+        });
+    }
+    likePost(id, userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let post = yield this.repo.findById(id);
+                if (post) {
+                    post.likes.push(new mongoose_1.default.Types.ObjectId(userId));
+                    let data = { likes: post.likes };
                     post = yield this.repo.update(id, data);
                     return post;
                 }
