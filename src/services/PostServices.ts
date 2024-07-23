@@ -4,6 +4,7 @@ import { PostDto, UpdatePostDto } from "../dto/post-dto";
 import "reflect-metadata";
 import { uploader } from "../utils/uploader";
 import { listeners } from "process";
+import mongoose from "mongoose";
 
 @Service()
 export class PostService {
@@ -181,6 +182,22 @@ export class PostService {
                 return post;
             }
         } catch (err: any) {
+            throw new Error(err.message);
+        }
+    }
+
+    async likePost(id: string, userId: string){
+        try{
+            let post = await this.repo.findById(id);
+
+            if(post){
+                post.likes.push(new mongoose.Types.ObjectId(userId));
+                let data = {likes: post.likes};
+                post = await this.repo.update(id, data);
+                return post
+            }
+        }
+        catch(err: any){
             throw new Error(err.message);
         }
     }

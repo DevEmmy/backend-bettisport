@@ -182,4 +182,15 @@ export class PostController {
     //         error(err.message, res, err.status || 400);
     //     }
     // }
+
+    async likePost(req: Request, res: Response) {
+        try {
+            let {id} = req.params;
+            const userId: string = req.body.user._id
+            const post = await this.service.likePost(id,userId);
+            return success(post, res);
+        } catch (err: any) {
+            error(err.message, res, err.status || 400);
+        }
+    }
 }

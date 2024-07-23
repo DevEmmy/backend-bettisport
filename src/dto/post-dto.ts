@@ -34,4 +34,5 @@ export interface UpdatePostDto {
     photoSplash?: string;
     slug?: string;
     reads?: number;
+    likes?: any
 }

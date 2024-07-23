@@ -12,6 +12,7 @@ const schema = new Schema({
     media : String,
     publish: {type: Boolean, default: false},
     categories: [{type: Schema.Types.ObjectId, ref: "Category"}],
+    likes: [{type: Schema.Types.ObjectId, ref: "User"}],
     menCategories: [{type: String}],
     womenCategories: [{type: String}],
     excerpt: String,
