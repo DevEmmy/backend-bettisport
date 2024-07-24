@@ -5,10 +5,11 @@ import "reflect-metadata";
 import { uploader } from "../utils/uploader";
 import { listeners } from "process";
 import mongoose from "mongoose";
+import UserRepository from "../repositories/UserRepository";
 
 @Service()
 export class PostService {
-    constructor(private readonly repo: PostRepository) { }
+    constructor(private readonly repo: PostRepository, private readonly userRepo: UserRepository) { }
 
     async createPost(data: PostDto) {
         try {
@@ -194,8 +195,13 @@ export class PostService {
                 post.likes.push(new mongoose.Types.ObjectId(userId));
                 let data = {likes: post.likes};
                 post = await this.repo.update(id, data);
+                let user = await this.userRepo.findById(userId)
+                user?.likes.push(new mongoose.Types.ObjectId(id))
+                this.userRepo.update(userId, user )
                 return post
             }
+
+            return null
         }
         catch(err: any){
             throw new Error(err.message);

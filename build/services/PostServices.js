@@ -27,9 +27,11 @@ const PostRepository_1 = __importDefault(require("../repositories/PostRepository
 require("reflect-metadata");
 const uploader_1 = require("../utils/uploader");
 const mongoose_1 = __importDefault(require("mongoose"));
+const UserRepository_1 = __importDefault(require("../repositories/UserRepository"));
 let PostService = exports.PostService = class PostService {
-    constructor(repo) {
+    constructor(repo, userRepo) {
         this.repo = repo;
+        this.userRepo = userRepo;
     }
     createPost(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -247,8 +249,12 @@ let PostService = exports.PostService = class PostService {
                     post.likes.push(new mongoose_1.default.Types.ObjectId(userId));
                     let data = { likes: post.likes };
                     post = yield this.repo.update(id, data);
+                    let user = yield this.userRepo.findById(userId);
+                    user === null || user === void 0 ? void 0 : user.likes.push(new mongoose_1.default.Types.ObjectId(id));
+                    this.userRepo.update(userId, user);
                     return post;
                 }
+                return null;
             }
             catch (err) {
                 throw new Error(err.message);
@@ -258,5 +264,5 @@ let PostService = exports.PostService = class PostService {
 };
 exports.PostService = PostService = __decorate([
     (0, typedi_1.Service)(),
-    __metadata("design:paramtypes", [PostRepository_1.default])
+    __metadata("design:paramtypes", [PostRepository_1.default, UserRepository_1.default])
 ], PostService);
