@@ -234,7 +234,8 @@ let PostController = exports.PostController = class PostController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 let { id } = req.params;
-                const userId = req.body.user._id;
+                const userId = req.body.user;
+                console.log(userId);
                 const post = yield this.service.likePost(id, userId);
                 return (0, response_1.success)(post, res);
             }

@@ -186,7 +186,8 @@ export class PostController {
     async likePost(req: Request, res: Response) {
         try {
             let {id} = req.params;
-            const userId: string = req.body.user._id
+            const userId: string = req.body.user
+            console.log(userId)
             const post = await this.service.likePost(id,userId);
             return success(post, res);
         } catch (err: any) {
