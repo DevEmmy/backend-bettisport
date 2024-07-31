@@ -3,22 +3,24 @@ import PostRepository from "../repositories/PostRepository";
 import { PostDto, UpdatePostDto } from "../dto/post-dto";
 import "reflect-metadata";
 import { uploader } from "../utils/uploader";
-import { listeners } from "process";
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose"; // Import Types for ObjectId
 import UserRepository from "../repositories/UserRepository";
 
 @Service()
 export class PostService {
-    constructor(private readonly repo: PostRepository, private readonly userRepo: UserRepository) { }
+    constructor(
+        private readonly repo: PostRepository,
+        private readonly userRepo: UserRepository
+    ) {}
 
     async createPost(data: PostDto) {
         try {
             if (data.media) {
-                data.media = await uploader(data.media as string)
+                data.media = await uploader(data.media as string);
             }
 
             if (data.featuredImage) {
-                data.featuredImage = await uploader(data.featuredImage as string)
+                data.featuredImage = await uploader(data.featuredImage as string);
             }
             const post = await this.repo.create(data);
             return post;
@@ -175,11 +177,11 @@ export class PostService {
         try {
             let post = await this.repo.findById(id);
             if (post) {
-                post.reads = post.reads + 1
-                console.log(post.reads)
-                let data = { reads: post.reads }
+                post.reads = post.reads + 1;
+                console.log(post.reads);
+                let data = { reads: post.reads };
 
-                post = await this.repo.update(id, data)
+                post = await this.repo.update(id, data);
                 return post;
             }
         } catch (err: any) {
@@ -187,24 +189,94 @@ export class PostService {
         }
     }
 
-    async likePost(id: string, userId: string){
-        try{
-            let post = await this.repo.findById(id);
-
-            if(post){
-                post.likes.push(new mongoose.Types.ObjectId(userId));
-                let data = {likes: post.likes};
-                post = await this.repo.update(id, data);
-                let user = await this.userRepo.findById(userId)
-                user?.likes.push(new mongoose.Types.ObjectId(id))
-                this.userRepo.update(userId, user )
-                return post
+    async likePost(postId: string, userId: string) {
+        try {
+            const post = await this.repo.findById(postId);
+    
+            if (post) {
+                const user = await this.userRepo.findById(userId);
+                if (!user) {
+                    return { message: "User not found" };
+                }
+    
+                const userObjectId = new mongoose.Types.ObjectId(userId);
+                const postObjectId = new mongoose.Types.ObjectId(postId);
+    
+                // Check if the user already liked the post
+                const isLiked = post.likes.some((id: Types.ObjectId) =>
+                    id.equals(userObjectId)
+                );
+    
+                if (isLiked) {
+                    // Unlike post
+                    post.likes = post.likes.filter(
+                        (id: Types.ObjectId) => !id.equals(userObjectId)
+                    );
+                    user.likes = user.likes.filter(
+                        (id: Types.ObjectId) => !id.equals(postObjectId)
+                    );
+    
+                    // Save the updated post and user
+                    await this.repo.update(postId, { likes: post.likes });
+                    await this.userRepo.update(userId, { likes: user.likes });
+    
+                    return { message: "Post unliked" };
+                } else {
+                    // Like post
+                    post.likes.push(userObjectId);
+                    user.likes.push(postObjectId);
+    
+                    // Save the updated post and user
+                    await this.repo.update(postId, { likes: post.likes });
+                    await this.userRepo.update(userId, { likes: user.likes });
+    
+                    return { message: "Post liked" };
+                }
             }
-
-            return null
-        }
-        catch(err: any){
+    
+            return { message: "Post not found" };
+        } catch (err: any) {
             throw new Error(err.message);
         }
     }
+    
+
+    async savePost(postId: string, userId: string) {
+        try {
+            const user = await this.userRepo.findById(userId);
+            if (!user) {
+                return { message: "User not found" };
+            }
+    
+            const postObjectId = new mongoose.Types.ObjectId(postId);
+    
+            // Check if the user already saved the post
+            const isSaved = user.saved.some((id: Types.ObjectId) =>
+                id.equals(postObjectId)
+            );
+    
+            if (isSaved) {
+                // Unsave post
+                user.saved = user.saved.filter(
+                    (id: Types.ObjectId) => !id.equals(postObjectId)
+                );
+    
+                // Save the updated user
+                await this.userRepo.update(userId, { saved: user.saved });
+    
+                return { message: "Post unsaved" };
+            } else {
+                // Save post
+                user.saved.push(postObjectId);
+    
+                // Save the updated user
+                await this.userRepo.update(userId, { saved: user.saved });
+    
+                return { message: "Post saved" };
+            }
+        } catch (err: any) {
+            throw new Error(err.message);
+        }
+    }
+    
 }

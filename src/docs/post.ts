@@ -227,6 +227,13 @@
  *   get:
  *     summary: Read a post
  *     tags: [Posts]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The post ID
  *     responses:
  *       200:
  *         description: Successful
@@ -350,26 +357,78 @@
  *       500:
  *         description: Some server error
  * 
- * /posts/author/{authorId}:
+ * /posts/class/read/{id}:
  *   get:
- *     summary: Get posts by author
+ *     summary: Increment read count of a post
  *     tags: [Posts]
  *     parameters:
  *       - in: path
- *         name: authorId
+ *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The author ID
+ *         description: The post ID
  *     responses:
  *       200:
- *         description: Successful
+ *         description: Successfully incremented read count
+ *       500:
+ *         description: Some server error
+ * 
+ * /posts/like/{id}:
+ *   patch:
+ *     summary: Like a post
+ *     tags: [Posts]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The post ID
+ *     responses:
+ *       200:
+ *         description: Post liked successfully
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Post'
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Indicates if the post was liked successfully
+ *                 post:
+ *                   $ref: '#/components/schemas/Post'
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Some server error
+ * 
+ * /posts/save/{id}:
+ *   patch:
+ *     summary: Save a post
+ *     tags: [Posts]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The post ID
+ *     responses:
+ *       200:
+ *         description: Post saved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Indicates if the post was saved successfully
+ *                 post:
+ *                   $ref: '#/components/schemas/Post'
+ *       400:
+ *         description: Bad request
  *       500:
  *         description: Some server error
  */

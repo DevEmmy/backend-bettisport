@@ -26,7 +26,7 @@ const typedi_1 = require("typedi");
 const PostRepository_1 = __importDefault(require("../repositories/PostRepository"));
 require("reflect-metadata");
 const uploader_1 = require("../utils/uploader");
-const mongoose_1 = __importDefault(require("mongoose"));
+const mongoose_1 = __importDefault(require("mongoose")); // Import Types for ObjectId
 const UserRepository_1 = __importDefault(require("../repositories/UserRepository"));
 let PostService = exports.PostService = class PostService {
     constructor(repo, userRepo) {
@@ -241,20 +241,69 @@ let PostService = exports.PostService = class PostService {
             }
         });
     }
-    likePost(id, userId) {
+    likePost(postId, userId) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let post = yield this.repo.findById(id);
+                const post = yield this.repo.findById(postId);
                 if (post) {
-                    post.likes.push(new mongoose_1.default.Types.ObjectId(userId));
-                    let data = { likes: post.likes };
-                    post = yield this.repo.update(id, data);
-                    let user = yield this.userRepo.findById(userId);
-                    user === null || user === void 0 ? void 0 : user.likes.push(new mongoose_1.default.Types.ObjectId(id));
-                    this.userRepo.update(userId, user);
-                    return post;
+                    const user = yield this.userRepo.findById(userId);
+                    if (!user) {
+                        return { message: "User not found" };
+                    }
+                    const userObjectId = new mongoose_1.default.Types.ObjectId(userId);
+                    const postObjectId = new mongoose_1.default.Types.ObjectId(postId);
+                    // Check if the user already liked the post
+                    const isLiked = post.likes.some((id) => id.equals(userObjectId));
+                    if (isLiked) {
+                        // Unlike post
+                        post.likes = post.likes.filter((id) => !id.equals(userObjectId));
+                        user.likes = user.likes.filter((id) => !id.equals(postObjectId));
+                        // Save the updated post and user
+                        yield this.repo.update(postId, { likes: post.likes });
+                        yield this.userRepo.update(userId, { likes: user.likes });
+                        return { message: "Post unliked" };
+                    }
+                    else {
+                        // Like post
+                        post.likes.push(userObjectId);
+                        user.likes.push(postObjectId);
+                        // Save the updated post and user
+                        yield this.repo.update(postId, { likes: post.likes });
+                        yield this.userRepo.update(userId, { likes: user.likes });
+                        return { message: "Post liked" };
+                    }
                 }
-                return null;
+                return { message: "Post not found" };
+            }
+            catch (err) {
+                throw new Error(err.message);
+            }
+        });
+    }
+    savePost(postId, userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const user = yield this.userRepo.findById(userId);
+                if (!user) {
+                    return { message: "User not found" };
+                }
+                const postObjectId = new mongoose_1.default.Types.ObjectId(postId);
+                // Check if the user already saved the post
+                const isSaved = user.saved.some((id) => id.equals(postObjectId));
+                if (isSaved) {
+                    // Unsave post
+                    user.saved = user.saved.filter((id) => !id.equals(postObjectId));
+                    // Save the updated user
+                    yield this.userRepo.update(userId, { saved: user.saved });
+                    return { message: "Post unsaved" };
+                }
+                else {
+                    // Save post
+                    user.saved.push(postObjectId);
+                    // Save the updated user
+                    yield this.userRepo.update(userId, { saved: user.saved });
+                    return { message: "Post saved" };
+                }
             }
             catch (err) {
                 throw new Error(err.message);
@@ -264,5 +313,6 @@ let PostService = exports.PostService = class PostService {
 };
 exports.PostService = PostService = __decorate([
     (0, typedi_1.Service)(),
-    __metadata("design:paramtypes", [PostRepository_1.default, UserRepository_1.default])
+    __metadata("design:paramtypes", [PostRepository_1.default,
+        UserRepository_1.default])
 ], PostService);

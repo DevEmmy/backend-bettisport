@@ -13,6 +13,7 @@ postRouter.post("/", verifyAuth_1.verifyAuth, (req, res) => postController.creat
 postRouter.get("/:id", (req, res) => postController.getPostById(req, res));
 postRouter.get("/read/:id", (req, res) => postController.readPost(req, res));
 postRouter.patch("/like/:id", verifyAuth_1.verifyAuth, (req, res) => postController.likePost(req, res));
+postRouter.patch("/save/:id", verifyAuth_1.verifyAuth, (req, res) => postController.savePost(req, res));
 postRouter.get("/", (req, res) => postController.getAllPosts(req, res));
 postRouter.get("/class/editors", (req, res) => postController.findPostsByEditorsPick(req, res));
 postRouter.get("/class/trending", (req, res) => postController.findPostsByMostRead(req, res));

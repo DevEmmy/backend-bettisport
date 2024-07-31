@@ -10,6 +10,7 @@ postRouter.post("/", verifyAuth ,(req: Request, res: Response) => postController
 postRouter.get("/:id", (req: Request, res: Response) => postController.getPostById(req, res));
 postRouter.get("/read/:id", (req: Request, res: Response) => postController.readPost(req, res));
 postRouter.patch("/like/:id", verifyAuth ,(req: Request, res: Response) => postController.likePost(req, res));
+postRouter.patch("/save/:id", verifyAuth ,(req: Request, res: Response) => postController.savePost(req, res));
 postRouter.get("/", (req: Request, res: Response) => postController.getAllPosts(req, res));
 postRouter.get("/class/editors", (req: Request, res: Response) => postController.findPostsByEditorsPick(req, res));
 postRouter.get("/class/trending", (req: Request, res: Response) => postController.findPostsByMostRead(req, res));

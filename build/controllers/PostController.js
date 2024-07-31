@@ -244,6 +244,20 @@ let PostController = exports.PostController = class PostController {
             }
         });
     }
+    savePost(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let { id } = req.params;
+                const userId = req.body.user;
+                console.log(userId);
+                const post = yield this.service.savePost(id, userId);
+                return (0, response_1.success)(post, res);
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
 };
 exports.PostController = PostController = __decorate([
     (0, typedi_1.Service)(),

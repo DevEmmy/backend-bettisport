@@ -194,4 +194,16 @@ export class PostController {
             error(err.message, res, err.status || 400);
         }
     }
+
+    async savePost(req: Request, res: Response) {
+        try {
+            let {id} = req.params;
+            const userId: string = req.body.user
+            console.log(userId)
+            const post = await this.service.savePost(id,userId);
+            return success(post, res);
+        } catch (err: any) {
+            error(err.message, res, err.status || 400);
+        }
+    }
 }
