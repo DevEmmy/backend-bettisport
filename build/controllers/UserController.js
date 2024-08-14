@@ -99,11 +99,23 @@ let UserController = exports.UserController = class UserController {
             }
         });
     }
+    getUserDetails(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { userId } = req.body;
+                let { payload } = yield this.service.getUserById(userId);
+                return (0, response_1.success)(payload, res);
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
     getLikedAndSaved(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { userId } = req.params;
-                let { payload } = yield this.service.getLikedAndSaved(userId);
+                const userId = req.body.user;
+                let { payload } = yield this.service.getLikedAndSaved(String(userId));
                 return (0, response_1.success)(payload, res);
             }
             catch (err) {

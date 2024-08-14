@@ -77,10 +77,6 @@ export class UserServices {
         }
     }
 
-    async getUserById(id: string) {
-
-    }
-
     async likePost(postId: string, userId: string) {
         try {
             let user = await this.repo.findById(userId);
@@ -135,6 +131,16 @@ export class UserServices {
     async findAll() {
         try {
             let payload: userDto[] = await this.repo.findAll();
+            return { payload }
+        }
+        catch (err: any) {
+            throw Error(err.message);
+        }
+    }
+
+    async getUserById(id: string){
+        try {
+            let payload = await this.repo.findById(id);
             return { payload }
         }
         catch (err: any) {

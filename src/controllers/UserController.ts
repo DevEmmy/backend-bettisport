@@ -78,10 +78,22 @@ export class UserController{
         }
     }
 
+    async getUserDetails(req: Request, res: Response){
+        try{
+            const {userId} = req.body;
+            let {payload} = await this.service.getUserById(userId);
+            return success(payload, res);
+        }   
+        catch(err: any){
+            error(err.message, res, err.status||400);
+        }
+    }
+
     async getLikedAndSaved(req: Request, res: Response){
         try{
-            const {userId} = req.params;
-            let {payload} = await this.service.getLikedAndSaved(userId);
+            const userId = req.body.user
+
+            let {payload} = await this.service.getLikedAndSaved(String(userId));
             return success(payload, res);
         }   
         catch(err: any){

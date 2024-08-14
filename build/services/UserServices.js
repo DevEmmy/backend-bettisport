@@ -96,10 +96,6 @@ let UserServices = exports.UserServices = class UserServices {
             }
         });
     }
-    getUserById(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-        });
-    }
     likePost(postId, userId) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -158,6 +154,17 @@ let UserServices = exports.UserServices = class UserServices {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 let payload = yield this.repo.findAll();
+                return { payload };
+            }
+            catch (err) {
+                throw Error(err.message);
+            }
+        });
+    }
+    getUserById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let payload = yield this.repo.findById(id);
                 return { payload };
             }
             catch (err) {
