@@ -7,13 +7,14 @@ export interface IFeed extends mongoose.Document {
     image?: string;
     createdAt: Date;
     updatedAt: Date;
+    media: string
 }
 
 const schema = new Schema({
     content: {type: String, require: true},
     postedBy: {type: Schema.Types.ObjectId, ref: "User"},
     likes: [{type: Schema.Types.ObjectId, ref: "User"}],
-    image: {type: String}
+    media: String
 },
 {
     timestamps: true

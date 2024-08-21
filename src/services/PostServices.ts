@@ -5,12 +5,14 @@ import "reflect-metadata";
 import { uploader } from "../utils/uploader";
 import mongoose, { Types } from "mongoose"; // Import Types for ObjectId
 import UserRepository from "../repositories/UserRepository";
+import { NotificationService } from "./NotificationServices";
 
 @Service()
 export class PostService {
     constructor(
         private readonly repo: PostRepository,
-        private readonly userRepo: UserRepository
+        private readonly userRepo: UserRepository,
+        private readonly notificationService: NotificationService
     ) {}
 
     async createPost(data: PostDto) {
@@ -229,7 +231,9 @@ export class PostService {
                     // Save the updated post and user
                     await this.repo.update(postId, { likes: post.likes });
                     await this.userRepo.update(userId, { likes: user.likes });
-    
+
+                    await this.notificationService.notifyPostLiked(String(post.author), user.firstName);
+
                     return { message: "Post liked" };
                 }
             }
@@ -244,6 +248,8 @@ export class PostService {
     async savePost(postId: string, userId: string) {
         try {
             const user = await this.userRepo.findById(userId);
+            const post = await this.repo.findById(postId);
+
             if (!user) {
                 return { message: "User not found" };
             }
@@ -271,7 +277,7 @@ export class PostService {
     
                 // Save the updated user
                 await this.userRepo.update(userId, { saved: user.saved });
-    
+                await this.notificationService.notifyPostSaved(String(post?.author), user.firstName);
                 return { message: "Post saved" };
             }
         } catch (err: any) {

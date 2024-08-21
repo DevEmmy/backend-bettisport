@@ -2,12 +2,21 @@
 import { Service } from "typedi";
 import { FeedRepository } from "../repositories/FeedRepository";
 import { IFeed } from "../models/feed";
+import { uploader } from "../utils/uploader";
 
 @Service()
 export class FeedService {
     constructor(private feedRepository: FeedRepository) {}
 
     async create(feed: IFeed): Promise<IFeed> {
+        try{
+            if (feed.media) {
+                feed.media = await uploader(feed.media as string);
+            }
+        }
+        catch(err: any){
+            return err
+        }
         return this.feedRepository.create(feed);
     }
 
