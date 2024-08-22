@@ -1,359 +1,177 @@
 /**
- * @swagger
+ * @openapi
  * components:
  *   schemas:
- *     Post:
+ *     Notification:
  *       type: object
- *       required:
- *         - title
- *         - author
  *       properties:
  *         _id:
  *           type: string
- *           description: The auto-generated id of the Post
+ *           example: "60c72b2f9b1d4c001cfaf113"
+ *         user:
+ *           type: string
+ *           example: "60c72b2f9b1d4c001cfaf112"
  *         title:
  *           type: string
- *           description: Post title
- *         author:
+ *           example: "New Like"
+ *         message:
  *           type: string
- *           description: The user ID of the author
- *         content:
- *           type: string
- *           description: Content of the post
- *         media:
- *           type: string
- *           description: Media associated with the post
- *         publish:
+ *           example: "Your post has been liked by another user."
+ *         read:
  *           type: boolean
- *           description: Publish status
- *           default: false
- *         categories:
- *           type: array
- *           items:
- *             type: string
- *           description: Array of category IDs
- *         menCategories:
- *           type: array
- *           items:
- *             type: string
- *           description: Array of men's category IDs
- *         womenCategories:
- *           type: array
- *           items:
- *             type: string
- *           description: Array of women's category IDs
- *         excerpt:
+ *           example: false
+ *         createdAt:
  *           type: string
- *           description: Excerpt of the post
- *         format:
+ *           format: date-time
+ *         updatedAt:
  *           type: string
- *           description: Format of the post
- *         tags:
- *           type: array
- *           items:
- *             type: string
- *           description: Array of tags
- *         featuredImage:
- *           type: string
- *           description: Featured image URL
- *         nationality:
- *           type: string
- *           description: Nationality of the post's context
- *         highlight:
- *           type: string
- *           description: Highlight of the post
- *         photoSplash:
- *           type: string
- *           description: Photo splash URL
- *         slug:
- *           type: string
- *           description: Slug for the post
- *         fantasy:
- *           type: boolean
- *           description: Fantasy status
- *           default: false
- *         editorsPick:
- *           type: boolean
- *           description: Editor's pick status
- *           default: false
- *         newsBreaking:
- *           type: boolean
- *           description: News breaking status
- *           default: false
- *         comments:
- *           type: string
- *           description: Comment ID
- *         reads:
- *           type: number
- *           description: Number of reads
- *           default: 0
- *         featured:
- *           type: boolean
- *           description: Featured status
- *           default: false
- * 
- * tags:
- *   - name: Posts
- *     description: This manages all post endpoints
- * 
- * /posts:
+ *           format: date-time
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @openapi
+ * /notifications:
  *   post:
- *     summary: Create a new post
- *     tags: [Posts]
+ *     summary: Create a new notification
+ *     tags:
+ *       - Notifications
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Post'
+ *             type: object
+ *             properties:
+ *               user:
+ *                 type: string
+ *                 example: "60c72b2f9b1d4c001cfaf112"
+ *               title:
+ *                 type: string
+ *                 example: "New Like"
+ *               message:
+ *                 type: string
+ *                 example: "Your post has been liked by another user."
+ *               read:
+ *                 type: boolean
+ *                 example: false
  *     responses:
- *       200:
- *         description: Successfully created
+ *       '201':
+ *         description: Notification created successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Post'
- *       500:
- *         description: Some server error
+ *               $ref: '#/components/schemas/Notification'
+ *       '400':
+ *         description: Invalid request body
+ *       '401':
+ *         description: Unauthorized
+ *       '500':
+ *         description: Internal Server Error
  *   get:
- *     summary: Get all posts
- *     tags: [Posts]
+ *     summary: Get all notifications for the authenticated user
+ *     tags:
+ *       - Notifications
+ *     security:
+ *       - bearerAuth: []
  *     responses:
- *       200:
- *         description: Successful
+ *       '200':
+ *         description: List of notifications
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Post'
- *       500:
- *         description: Some server error
- * 
- * /posts/{id}:
+ *                 $ref: '#/components/schemas/Notification'
+ *       '401':
+ *         description: Unauthorized
+ *       '500':
+ *         description: Internal Server Error
+ */
+
+/**
+ * @openapi
+ * /notifications/{id}:
  *   get:
- *     summary: Get a post by ID
- *     tags: [Posts]
+ *     summary: Get notification by ID
+ *     tags:
+ *       - Notifications
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: id
+ *       - name: id
+ *         in: path
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
- *         description: The post ID
  *     responses:
- *       200:
- *         description: Successful
+ *       '200':
+ *         description: Notification found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Post'
- *       500:
- *         description: Some server error
- *   put:
- *     summary: Update a post by ID
- *     tags: [Posts]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: The post ID
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Post'
- *     responses:
- *       200:
- *         description: Successfully updated
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Post'
- *       500:
- *         description: Some server error
+ *               $ref: '#/components/schemas/Notification'
+ *       '404':
+ *         description: Notification not found
+ *       '401':
+ *         description: Unauthorized
+ *       '500':
+ *         description: Internal Server Error
  *   delete:
- *     summary: Delete a post by ID
- *     tags: [Posts]
+ *     summary: Delete notification by ID
+ *     tags:
+ *       - Notifications
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: id
+ *       - name: id
+ *         in: path
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
- *         description: The post ID
  *     responses:
- *       200:
- *         description: Successfully deleted
- *       500:
- *         description: Some server error
- * 
- * /posts/class/editors:
- *   get:
- *     summary: Get posts by editor's pick
- *     tags: [Posts]
- *     responses:
- *       200:
- *         description: Successful
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Post'
- *       500:
- *         description: Some server error
- * 
- * /posts/class/trending:
- *   get:
- *     summary: Get trending posts
- *     tags: [Posts]
- *     responses:
- *       200:
- *         description: Successful
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Post'
- *       500:
- *         description: Some server error
- * 
- * /posts/read/{id}:
- *   get:
- *     summary: Read a post
- *     tags: [Posts]
+ *       '200':
+ *         description: Notification deleted successfully
+ *       '404':
+ *         description: Notification not found
+ *       '401':
+ *         description: Unauthorized
+ *       '500':
+ *         description: Internal Server Error
+ */
+
+/**
+ * @openapi
+ * /notifications/read/{id}:
+ *   patch:
+ *     summary: Mark notification as read
+ *     tags:
+ *       - Notifications
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: id
+ *       - name: id
+ *         in: path
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
- *         description: The post ID
  *     responses:
- *       200:
- *         description: Successful
+ *       '200':
+ *         description: Notification marked as read
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Post'
- * 
- *       500:
- *         description: Some server error
- * 
- * /posts/class/popular:
- *   get:
- *     summary: Get popular posts
- *     tags: [Posts]
- *     responses:
- *       200:
- *         description: Successful
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Post'
- *       500:
- *         description: Some server error
- * 
- * /posts/class/news-breaking:
- *   get:
- *     summary: Get news-breaking posts
- *     tags: [Posts]
- *     responses:
- *       200:
- *         description: Successful
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Post'
- *       500:
- *         description: Some server error
- * 
- * /posts/class/featured:
- *   get:
- *     summary: Get featured posts
- *     tags: [Posts]
- *     responses:
- *       200:
- *         description: Successful
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Post'
- *       500:
- *         description: Some server error
- * 
- * /posts/class/articles:
- *   get:
- *     summary: Get articles posts
- *     tags: [Posts]
- *     responses:
- *       200:
- *         description: Successful
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Post'
- *       500:
- *         description: Some server error
- * 
- * /posts/class/photo-splash:
- *   get:
- *     summary: Get photo-splash posts
- *     tags: [Posts]
- *     responses:
- *       200:
- *         description: Successful
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Post'
- *       500:
- *         description: Some server error
- * 
- * /posts/class/in-focus:
- *   get:
- *     summary: Get in-focus posts
- *     tags: [Posts]
- *     responses:
- *       200:
- *         description: Successful
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Post'
- *       500:
- *         description: Some server error
- * 
- * /posts/class/fantasy:
- *   get:
- *     summary: Get fantasy posts
- *     tags: [Posts]
- *     responses:
- *       200:
- *         description: Successful
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Post'
- *       500:
- *         description: Some server error
+ *               $ref: '#/components/schemas/Notification'
+ *       '404':
+ *         description: Notification not found
+ *       '401':
+ *         description: Unauthorized
+ *       '500':
+ *         description: Internal Server Error
  */
