@@ -7,10 +7,10 @@ import { verifyAuth } from '../middleware/verifyAuth';
 const router = Router();
 const notificationController = Container.get(NotificationController);
 
-router.post('/notifications', verifyAuth, (req, res) => notificationController.createNotification(req, res));
-router.get('/notifications/:id', verifyAuth, (req, res) => notificationController.getNotificationById(req, res));
-router.get('/notifications', verifyAuth, (req, res) => notificationController.getUserNotifications(req, res));
-router.patch('/notifications/read/:id', verifyAuth, (req, res) => notificationController.markNotificationAsRead(req, res));
-router.delete('/notifications/:id', verifyAuth, (req, res) => notificationController.deleteNotification(req, res));
+router.post('/', verifyAuth, (req, res) => notificationController.createNotification(req, res));
+router.get('/:id', verifyAuth, (req, res) => notificationController.getNotificationById(req, res));
+router.get('/', verifyAuth, (req, res) => notificationController.getUserNotifications(req, res));
+router.patch('/read/:id', verifyAuth, (req, res) => notificationController.markNotificationAsRead(req, res));
+router.delete('/:id', verifyAuth, (req, res) => notificationController.deleteNotification(req, res));
 
 export default router;
