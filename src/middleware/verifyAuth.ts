@@ -7,6 +7,9 @@ let jwtSecret = process.env.JWT_SECRET as string;
 export const verifyAuth = (request: Request, response: Response, next: NextFunction)=>{
     try{
         const authorization = request.headers.authorization as string;
+        if(!authorization){
+            return response.status(400).json({message: "User not Authorized"});
+        }
         let token = authorization.replace("Bearer ", "");
         if(token){
             let payload: any = jwt.verify(token, jwtSecret)
