@@ -29,9 +29,9 @@ export class NotificationService {
   }
 
   // New methods for post liked and saved notifications
-  async notifyPostLiked(postOwnerId: string, user: string): Promise<INotification> {
+  async notifyPostLiked(postOwnerId: any, user: string): Promise<INotification> {
     const notificationData: Partial<INotification> = {
-      user: new mongoose.Schema.ObjectId(postOwnerId),
+      user: postOwnerId,
       title: 'Your post was liked!',
       message: `${user} liked your post.`,
       read: false,
@@ -39,9 +39,9 @@ export class NotificationService {
     return await this.createNotification(notificationData);
   }
 
-  async notifyPostSaved(postOwnerId: string, user: string): Promise<INotification> {
+  async notifyPostSaved(postOwnerId: any, user: string): Promise<INotification> {
     const notificationData: Partial<INotification> = {
-        user: new mongoose.Schema.ObjectId(postOwnerId),
+        user: postOwnerId,
       title: 'Your post was saved!',
       message: `${user} saved your post.`,
       read: false,

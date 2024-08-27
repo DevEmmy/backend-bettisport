@@ -177,7 +177,7 @@ export class PostService {
 
     async readPost(id: string) {
         try {
-            let post = await this.repo.findById(id);
+            let post : any = await this.repo.findById(id);
             if (post) {
                 post.reads = post.reads + 1;
                 console.log(post.reads);
@@ -193,7 +193,7 @@ export class PostService {
 
     async likePost(postId: string, userId: string) {
         try {
-            const post = await this.repo.findById(postId);
+            const post : any = await this.repo.findById(postId);
     
             if (post) {
                 const user = await this.userRepo.findById(userId);
@@ -232,7 +232,8 @@ export class PostService {
                     await this.repo.update(postId, { likes: post.likes });
                     await this.userRepo.update(userId, { likes: user.likes });
 
-                    await this.notificationService.notifyPostLiked(String(post.author), user.firstName);
+                    console.log(String(post.author?._id))
+                    await this.notificationService.notifyPostLiked(post.author._id, user.firstName);
 
                     return { message: "Post liked" };
                 }
@@ -248,7 +249,7 @@ export class PostService {
     async savePost(postId: string, userId: string) {
         try {
             const user = await this.userRepo.findById(userId);
-            const post = await this.repo.findById(postId);
+            const post : any= await this.repo.findById(postId);
 
             if (!user) {
                 return { message: "User not found" };
@@ -277,7 +278,7 @@ export class PostService {
     
                 // Save the updated user
                 await this.userRepo.update(userId, { saved: user.saved });
-                await this.notificationService.notifyPostSaved(String(post?.author), user.firstName);
+                await this.notificationService.notifyPostSaved(post.author._id, user.firstName);
                 return { message: "Post saved" };
             }
         } catch (err: any) {
