@@ -36,6 +36,7 @@ export class NotificationService {
       message: `${user} liked your post.`,
       read: false,
     };
+    console.log("Notification sent")
     return await this.createNotification(notificationData);
   }
 
