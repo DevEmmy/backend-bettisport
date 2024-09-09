@@ -15,6 +15,7 @@ export interface PostDto {
     highlight?: string;
     photoSplash?: string;
     slug?: string;
+    mediaType: "image" | "video"
 }
 
 export interface UpdatePostDto {

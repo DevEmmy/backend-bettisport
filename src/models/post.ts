@@ -1,8 +1,16 @@
     import mongoose, {Schema} from "mongoose";
 
-    enum PublishType {
+    export enum PublishType {
         DRAFT = "DRAFT",
         PUBLISH = "PUBLISH"
+    }
+
+    export enum PostFormat{
+        STORY = "STORY",
+        PODCAST = "PODCAST",
+        PHOTOSPLASH = "PHOTOSPLASH",
+        VIDEO = "VIDEO",
+        STANDARD = "STANDARD"
     }
 
     const schema = new Schema({
@@ -16,7 +24,7 @@
         menCategories: [{type: String}],
         womenCategories: [{type: String}],
         excerpt: String,
-        format: String,
+        format: {type:String, enum : Object.values(PostFormat), default : PostFormat.STANDARD},
         tags: [{type: String}],
         featuredImage: {type: String},
         nationality: {type: String},
@@ -31,6 +39,7 @@
         featured: {type: Boolean, default: false},
         article: {type: Boolean, default: false},
         inFocus: {type: Boolean, default: false}
+
     },
     {
         timestamps: true

@@ -1,17 +1,16 @@
-import  cloudinary from "cloudinary"
+import { v2 as cloudinary } from "cloudinary";
 
 require("dotenv").config()
 
-cloudinary.v2.config({
+cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.CLOUD_API_KEY,
     api_secret: process.env.CLOUD_API_SECRET
   });
 
-
 export const uploader = async (data: string) => {
 
-    let url = (await cloudinary.v2.uploader.upload(data)).secure_url;
+    let url = (await cloudinary.uploader.upload(data)).secure_url;
     return url
 }
 
@@ -24,3 +23,4 @@ export const uploaderListOfMedia = async (arr: any) => {
     return newArr;
 }
 
+export default cloudinary;

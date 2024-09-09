@@ -2,10 +2,11 @@ import { Service } from "typedi";
 import PostRepository from "../repositories/PostRepository";
 import { PostDto, UpdatePostDto } from "../dto/post-dto";
 import "reflect-metadata";
-import { uploader } from "../utils/uploader";
+import cloudinary, { uploader } from "../utils/uploader";
 import mongoose, { Types } from "mongoose"; // Import Types for ObjectId
 import UserRepository from "../repositories/UserRepository";
 import { NotificationService } from "./NotificationServices";
+import { PostFormat } from "../models/post";
 
 @Service()
 export class PostService {
@@ -17,8 +18,16 @@ export class PostService {
 
     async createPost(data: PostDto) {
         try {
-            if (data.media) {
+            if (data.media && data.mediaType == "image") {
                 data.media = await uploader(data.media as string);
+            }
+            else if(data.media && data.mediaType == "video"){
+                data.media =  (
+                    await cloudinary.uploader.upload(data.media as string, {
+                      resource_type: "video",
+                      format: "mp4",
+                    })
+                  ).secure_url;
             }
 
             if (data.featuredImage) {
