@@ -2,6 +2,7 @@ import { Service } from "typedi";
 import PollRepository from "../repositories/PollRepository";
 import { PollDto, UpdatePollDto, VoteDto } from "../dto/poll-dto";
 import "reflect-metadata";
+import { uploader } from "../utils/uploader";
 
 @Service()
 export class PollService {
@@ -9,6 +10,9 @@ export class PollService {
 
     async createPoll(data: PollDto) {
         try {
+            if (data.media) {
+                data.media = await uploader(data.media as string);
+            }
             const poll = await this.repo.create(data);
             return poll;
         } catch (err: any) {

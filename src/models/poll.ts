@@ -13,6 +13,7 @@ const pollSchema = new Schema({
     question: { type: String, required: true },
     format: { type: String, required: true },
     choices: [choiceSchema],
+    media: String
     duration: { type: Number, required: true },
     author: { type: Schema.Types.ObjectId, ref: "User", required: true },
     createdAt: { type: Date, default: Date.now },

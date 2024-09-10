@@ -4,6 +4,7 @@ export interface PollDto {
     choices: { text: string; votes: number; voters: string[] }[];
     duration: number;
     author: string; // ObjectId as string
+    media: string
 }
 
 export interface UpdatePollDto {
