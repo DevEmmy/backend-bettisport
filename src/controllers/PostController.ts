@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 import { PostService } from "../services/PostServices";
 import { error, success } from "../utils/response";
 import { PostDto, UpdatePostDto } from "../dto/post-dto";
+import { PostFormat } from "../models/post";
 
 @Service()
 export class PostController {
@@ -156,6 +157,16 @@ export class PostController {
     async findPostsByFantasy(req: Request, res: Response) {
         try {
             const posts = await this.service.findPostsByFantasy();
+            return success(posts, res);
+        } catch (err: any) {
+            error(err.message, res, err.status || 400);
+        }
+    }
+
+    async findPostsByFormat(req: Request, res: Response) {
+        try {
+            const format : any= req.params.format
+            const posts = await this.service.findPostByFormat(format);
             return success(posts, res);
         } catch (err: any) {
             error(err.message, res, err.status || 400);

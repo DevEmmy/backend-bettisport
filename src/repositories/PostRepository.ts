@@ -1,6 +1,6 @@
 import { Service } from "typedi";
 import "reflect-metadata";
-import Post from "../models/post";
+import Post, { PostFormat } from "../models/post";
 import { PostDto, UpdatePostDto } from "../dto/post-dto";
 
 @Service()
@@ -114,6 +114,10 @@ class PostRepository {
 
     async findFantasy() {
         return await this.model.find({fantasy: true}).populate("author")
+    }
+
+    async findByFormat(format: PostFormat){
+        return await this.model.find({format}).populate("author")
     }
 }
 

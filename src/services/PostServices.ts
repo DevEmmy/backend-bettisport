@@ -175,6 +175,15 @@ export class PostService {
         }
     }
 
+    async findPostByFormat(format: PostFormat) {
+        try {
+            const posts = await this.repo.findByFormat(format);
+            return posts;
+        } catch (err: any) {
+            throw new Error(err.message);
+        }
+    }
+
     async findPostsByCategories(categories: string[]) {
         try {
             const posts = await this.repo.getPostsByCategories(categories);

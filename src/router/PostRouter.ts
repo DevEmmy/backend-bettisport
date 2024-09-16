@@ -13,6 +13,7 @@ postRouter.patch("/like/:id", verifyAuth ,(req: Request, res: Response) => postC
 postRouter.patch("/save/:id", verifyAuth ,(req: Request, res: Response) => postController.savePost(req, res));
 postRouter.get("/", (req: Request, res: Response) => postController.getAllPosts(req, res));
 postRouter.get("/class/editors", (req: Request, res: Response) => postController.findPostsByEditorsPick(req, res));
+postRouter.get("/format/:format", (req: Request, res: Response) => postController.findPostsByFormat(req, res));
 postRouter.get("/class/trending", (req: Request, res: Response) => postController.findPostsByMostRead(req, res));
 postRouter.get("/class/popular", (req: Request, res: Response) => postController.findPostsByMostInteracted(req, res));
 postRouter.get("/class/news-breaking", (req: Request, res: Response) => postController.findPostsByNewsBreaking(req, res));
