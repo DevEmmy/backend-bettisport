@@ -16,6 +16,7 @@ export class PostService {
         private readonly notificationService: NotificationService
     ) {}
 
+//create post
     async createPost(data: PostDto) {
         try {
             if (data.media && data.mediaType == "image") {
