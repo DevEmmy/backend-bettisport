@@ -57,6 +57,17 @@ const loginDetails = (email:string, password: string)=>{
     `
 }
 
+const sendForgottenPasswordLink = (token:string)=>{
+    return `
+        <html>
+            <body>
+                <p>Click on the link below to reset your password</p>
+                <p> <a href="https://bettisports-blue.vercel.app/update-password?token=${token}">click here</> </p>
+            </body>
+        </html>
+    `
+}
+
 
 @Service()
 class EmailService{
@@ -84,8 +95,11 @@ class EmailService{
     }
 
     async sendSignUpOTP(email: string, otp: number){
-        
         this.mail(email, "Emmy", "OTP - Confirm your Eexily User verification!", registerHtml(otp))
+    }
+
+    async sendResetToken(email: string, token: string){
+        this.mail(email, "Emmy", "Reset Password!", sendForgottenPasswordLink(token))
     }
 
     async getLoginCredentials(email: string, password: string){

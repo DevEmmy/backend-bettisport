@@ -47,6 +47,11 @@ class UserRepository{
         const users : userDto[] =await this.model.find({role});
         return users
     }
+
+    async findByToken(token: string){
+        const user = await this.model.findOne({resetToken: token});
+        return user
+    }
 }
 
 export default UserRepository;

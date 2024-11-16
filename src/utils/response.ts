@@ -8,7 +8,7 @@ export const success = (payload: any, res: Response)=>{
 }
 
 export const error = (message: string, res: Response, status: number | null )=>{
-    return res.status(400 || status).json({
+    return res.status( status || 400).json({
         message: message,
     })
 }

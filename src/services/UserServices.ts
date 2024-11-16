@@ -147,4 +147,50 @@ export class UserServices {
             throw Error(err.message);
         }
     }
+
+    async forgotPassword(email: string){
+        try{
+            let user = await this.repo.findByEmail(email);
+            if(!user){
+                return {
+                    payload: null,
+                    message: "There is no user with this Email",
+                    status: 400
+                }
+            }
+
+            user.resetToken = this.generateToken(String(user._id))
+            this.emailService.sendResetToken(user.email, user.resetToken)
+            user.resetTokenExpiration = new Date(new Date().setHours(new Date().getHours() + 5))
+            this.repo.update(String(user._id), user)
+            return {
+                message: "Check your Email"
+            }
+        }
+        catch (err: any) {
+            throw Error(err.message);
+        }
+    }
+
+    async updatePassword(token: string, newPassword: string){
+        try{
+            let user = await this.repo.findByToken(token);
+            if(!user){
+                return {
+                    payload: null,
+                    message: "Invalid Token",
+                    status: 400
+                }
+            }
+
+           user.password = await bcrypt.hash(newPassword, 8)
+            user = await this.repo.update(String(user._id), user)
+            return {
+                message: "Password Updated!"
+            }
+        }
+        catch (err: any) {
+            throw Error(err.message);
+        }
+    }
 }
