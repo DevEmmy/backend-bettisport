@@ -193,4 +193,26 @@ export class UserServices {
             throw Error(err.message);
         }
     }
+
+    async updateProfile(id: string, data: any){
+        try{
+            let user = await this.repo.findById(id);
+            if(!user){
+                return {
+                    payload: null,
+                    message: "User not Found",
+                    status: 40
+                }
+            }
+
+            user = await this.repo.update(id, data)
+            return {
+                message: "User Updated!",
+                payload: user
+            }
+        }
+        catch (err: any) {
+            throw Error(err.message);
+        }
+    }
 }

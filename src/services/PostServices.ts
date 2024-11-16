@@ -23,12 +23,7 @@ export class PostService {
                 data.media = await uploader(data.media as string);
             }
             else if(data.media && data.mediaType == "video"){
-                data.media =  (
-                    await cloudinary.uploader.upload(data.media as string, {
-                      resource_type: "video",
-                      format: "mp4",
-                    })
-                  ).secure_url;
+                data.media =  await uploader(data.media as string, "video");
             }
 
             if (data.featuredImage) {

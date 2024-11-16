@@ -9,7 +9,7 @@ const schema = new Schema({
     profilePicture: {type: String, required: false, default: "https://i.pinimg.com/originals/cf/7b/65/cf7b6579b699862233526da318a4d3fa.jpg"},
     likes: [{type: Schema.Types.ObjectId, ref: "Post"}],
     saved: [{type: Schema.Types.ObjectId, ref: "Post"}],
-    role: {type: String, enum: Object.values(Roles), default: Roles.ADMINISTRATOR},
+    role: {type: String, enum: Object.values(Roles), default: Roles.SUBSCRIBER},
     resetToken: String,
     resetTokenExpiration: Date
 },

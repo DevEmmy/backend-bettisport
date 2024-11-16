@@ -151,8 +151,26 @@ export class UserController{
     async resetPassword(req: Request, res: Response){
         try{
             let data = req.body;
-            let {message} = await this.service.updatePassword(data.token, data.newPassword);
-            return res.json({message})
+            let resp = await this.service.updatePassword(data.token, data.newPassword);
+            if(resp.status == 400){
+                return error(resp.message, res, resp.status)
+            }
+            return res.json({message: resp.message})
+        }
+        catch(err: any){
+            error(err.message, res, err.status||400);
+        }
+    }
+
+    async updateProfile(req: Request, res: Response){
+        try{
+            let data = req.body;
+            let userId = req.body.user
+            let resp = await this.service.updateProfile(userId, data);
+            if(resp.status == 400){
+                return error(resp.message, res, resp.status)
+            }
+            return res.json({message: resp.message})
         }
         catch(err: any){
             error(err.message, res, err.status||400);
