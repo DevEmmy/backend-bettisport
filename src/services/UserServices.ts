@@ -159,7 +159,7 @@ export class UserServices {
                 }
             }
 
-            user.resetToken = this.generateToken(String(user._id))
+            user.resetToken = this.generateToken(String(user._id));
             this.emailService.sendResetToken(user.email, user.resetToken)
             user.resetTokenExpiration = new Date(new Date().setHours(new Date().getHours() + 5))
             this.repo.update(String(user._id), user)
