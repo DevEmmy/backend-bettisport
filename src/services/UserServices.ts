@@ -184,6 +184,7 @@ export class UserServices {
             }
 
            user.password = await bcrypt.hash(newPassword, 8)
+           user.resetToken = null;
             user = await this.repo.update(String(user._id), user)
             return {
                 message: "Password Updated!"
