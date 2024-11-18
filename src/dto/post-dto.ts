@@ -1,4 +1,5 @@
 export interface PostDto {
+    thumbNail?: string,
     title: string;
     author: string; // ObjectId as string
     content: string;
