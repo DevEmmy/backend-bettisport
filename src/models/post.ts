@@ -38,7 +38,7 @@
         reads: {type: Number, default: 0},
         featured: {type: Boolean, default: false},
         article: {type: Boolean, default: false},
-        inFocus: {type: Boolean, default: false}
+        inFocus: {type: Boolean, default: false},
         thumbNail: {type: String}
     },
     {
