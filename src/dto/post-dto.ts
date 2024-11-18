@@ -19,6 +19,7 @@ export interface PostDto {
 }
 
 export interface UpdatePostDto {
+    thumbNail?: string,
     title?: string;
     content?: string;
     media?: string;

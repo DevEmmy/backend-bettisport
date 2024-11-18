@@ -29,6 +29,10 @@ export class PostService {
             if (data.featuredImage) {
                 data.featuredImage = await uploader(data.featuredImage as string);
             }
+
+            if (data.thumbNail) {
+                data.featuredImage = await uploader(data.thumbNail as string);
+            }
             const post = await this.repo.create(data);
             return post;
         } catch (err: any) {

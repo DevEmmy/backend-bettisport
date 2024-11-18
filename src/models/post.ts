@@ -39,7 +39,7 @@
         featured: {type: Boolean, default: false},
         article: {type: Boolean, default: false},
         inFocus: {type: Boolean, default: false}
-
+        thumbNail: {type: String}
     },
     {
         timestamps: true
