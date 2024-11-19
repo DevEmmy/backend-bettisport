@@ -5,7 +5,7 @@ require("dotenv").config()
 
 const transporter = nodemailer.createTransport({
     service:"gmail",
-    host: 'smtp.zoho.com',
+    host: 'smtp.gmail.com',
     port: 465,
     secure: true,
     auth: {
@@ -57,16 +57,91 @@ const loginDetails = (email:string, password: string)=>{
     `
 }
 
-const sendForgottenPasswordLink = (token:string)=>{
+const sendForgottenPasswordLink = (token: string) => {
+    const resetLink = `https://bettisports-blue.vercel.app/update-password?token=${token}`;
     return `
-        <html>
-            <body>
-                <p>Click on the link below to reset your password</p>
-                <p> <a href="https://bettisports-blue.vercel.app/update-password?token=${token}">click here</> </p>
-            </body>
-        </html>
-    `
-}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reset Your Password</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333333;
+                margin: 0;
+                padding: 0;
+                background-color: #f9f9f9;
+            }
+            .email-container {
+                max-width: 600px;
+                margin: 20px auto;
+                background: #ffffff;
+                border: 1px solid #dddddd;
+                border-radius: 8px;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+            }
+            .email-header {
+                background: #0044cc;
+                color: #ffffff;
+                text-align: center;
+                padding: 20px;
+            }
+            .email-header h1 {
+                margin: 0;
+                font-size: 24px;
+            }
+            .email-body {
+                padding: 20px;
+                text-align: center;
+            }
+            .email-body p {
+                margin-bottom: 20px;
+                font-size: 16px;
+                color: #555555;
+            }
+            .email-body a {
+                display: inline-block;
+                padding: 10px 20px;
+                background: #0044cc;
+                color: #ffffff;
+                text-decoration: none;
+                border-radius: 4px;
+                font-weight: bold;
+            }
+            .email-body a:hover {
+                background: #003399;
+            }
+            .email-footer {
+                font-size: 12px;
+                text-align: center;
+                color: #888888;
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="email-container">
+            <div class="email-header">
+                <h1>Bettisports</h1>
+            </div>
+            <div class="email-body">
+                <p>Hello,</p>
+                <p>We received a request to reset your password. Click the button below to proceed:</p>
+                <a href="${resetLink}" target="_blank">Reset Password</a>
+                <p>If you didn’t request a password reset, please ignore this email or contact support.</p>
+            </div>
+            <div class="email-footer">
+                <p>&copy; ${new Date().getFullYear()} Bettisports. All rights reserved.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+    `;
+};
 
 
 @Service()
@@ -95,7 +170,7 @@ class EmailService{
     }
 
     async sendSignUpOTP(email: string, otp: number){
-        this.mail(email, "Emmy", "OTP - Confirm your Eexily User verification!", registerHtml(otp))
+        this.mail(email, "Emmy", "OTP - Confirm your Bettisport User verification!", registerHtml(otp))
     }
 
     async sendResetToken(email: string, token: string){
