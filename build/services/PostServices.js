@@ -28,19 +28,28 @@ require("reflect-metadata");
 const uploader_1 = require("../utils/uploader");
 const mongoose_1 = __importDefault(require("mongoose")); // Import Types for ObjectId
 const UserRepository_1 = __importDefault(require("../repositories/UserRepository"));
-let PostService = exports.PostService = class PostService {
-    constructor(repo, userRepo) {
+const NotificationServices_1 = require("./NotificationServices");
+let PostService = class PostService {
+    constructor(repo, userRepo, notificationService) {
         this.repo = repo;
         this.userRepo = userRepo;
+        this.notificationService = notificationService;
     }
+    //create post
     createPost(data) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                if (data.media) {
+                if (data.media && data.mediaType == "image") {
                     data.media = yield (0, uploader_1.uploader)(data.media);
+                }
+                else if (data.media && data.mediaType == "video") {
+                    data.media = yield (0, uploader_1.uploader)(data.media, "video");
                 }
                 if (data.featuredImage) {
                     data.featuredImage = yield (0, uploader_1.uploader)(data.featuredImage);
+                }
+                if (data.thumbNail) {
+                    data.featuredImage = yield (0, uploader_1.uploader)(data.thumbNail);
                 }
                 const post = yield this.repo.create(data);
                 return post;
@@ -213,6 +222,17 @@ let PostService = exports.PostService = class PostService {
             }
         });
     }
+    findPostByFormat(format) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const posts = yield this.repo.findByFormat(format);
+                return posts;
+            }
+            catch (err) {
+                throw new Error(err.message);
+            }
+        });
+    }
     findPostsByCategories(categories) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -242,6 +262,7 @@ let PostService = exports.PostService = class PostService {
         });
     }
     likePost(postId, userId) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const post = yield this.repo.findById(postId);
@@ -270,6 +291,8 @@ let PostService = exports.PostService = class PostService {
                         // Save the updated post and user
                         yield this.repo.update(postId, { likes: post.likes });
                         yield this.userRepo.update(userId, { likes: user.likes });
+                        console.log(String((_a = post.author) === null || _a === void 0 ? void 0 : _a._id));
+                        yield this.notificationService.notifyPostLiked(post.author._id, user.firstName);
                         return { message: "Post liked" };
                     }
                 }
@@ -284,6 +307,7 @@ let PostService = exports.PostService = class PostService {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = yield this.userRepo.findById(userId);
+                const post = yield this.repo.findById(postId);
                 if (!user) {
                     return { message: "User not found" };
                 }
@@ -302,6 +326,7 @@ let PostService = exports.PostService = class PostService {
                     user.saved.push(postObjectId);
                     // Save the updated user
                     yield this.userRepo.update(userId, { saved: user.saved });
+                    yield this.notificationService.notifyPostSaved(post.author._id, user.firstName);
                     return { message: "Post saved" };
                 }
             }
@@ -311,8 +336,10 @@ let PostService = exports.PostService = class PostService {
         });
     }
 };
-exports.PostService = PostService = __decorate([
+PostService = __decorate([
     (0, typedi_1.Service)(),
     __metadata("design:paramtypes", [PostRepository_1.default,
-        UserRepository_1.default])
+        UserRepository_1.default,
+        NotificationServices_1.NotificationService])
 ], PostService);
+exports.PostService = PostService;

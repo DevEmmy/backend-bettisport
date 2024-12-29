@@ -21,7 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FeedController = void 0;
 const typedi_1 = require("typedi");
 const FeedServices_1 = require("../services/FeedServices");
-let FeedController = exports.FeedController = class FeedController {
+let FeedController = class FeedController {
     constructor(feedService) {
         this.feedService = feedService;
     }
@@ -98,7 +98,8 @@ let FeedController = exports.FeedController = class FeedController {
         });
     }
 };
-exports.FeedController = FeedController = __decorate([
+FeedController = __decorate([
     (0, typedi_1.Service)(),
     __metadata("design:paramtypes", [FeedServices_1.FeedService])
 ], FeedController);
+exports.FeedController = FeedController;

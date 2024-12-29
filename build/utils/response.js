@@ -9,7 +9,7 @@ const success = (payload, res) => {
 };
 exports.success = success;
 const error = (message, res, status) => {
-    return res.status(400 || status).json({
+    return res.status(status || 400).json({
         message: message,
     });
 };

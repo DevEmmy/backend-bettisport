@@ -23,12 +23,21 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.PostFormat = exports.PublishType = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 var PublishType;
 (function (PublishType) {
     PublishType["DRAFT"] = "DRAFT";
     PublishType["PUBLISH"] = "PUBLISH";
-})(PublishType || (PublishType = {}));
+})(PublishType = exports.PublishType || (exports.PublishType = {}));
+var PostFormat;
+(function (PostFormat) {
+    PostFormat["STORY"] = "STORY";
+    PostFormat["PODCAST"] = "PODCAST";
+    PostFormat["PHOTOSPLASH"] = "PHOTOSPLASH";
+    PostFormat["VIDEO"] = "VIDEO";
+    PostFormat["STANDARD"] = "STANDARD";
+})(PostFormat = exports.PostFormat || (exports.PostFormat = {}));
 const schema = new mongoose_1.Schema({
     title: { type: String, require: true },
     author: { type: mongoose_1.Schema.Types.ObjectId, ref: "User" },
@@ -40,7 +49,7 @@ const schema = new mongoose_1.Schema({
     menCategories: [{ type: String }],
     womenCategories: [{ type: String }],
     excerpt: String,
-    format: String,
+    format: { type: String, enum: Object.values(PostFormat), default: PostFormat.STANDARD },
     tags: [{ type: String }],
     featuredImage: { type: String },
     nationality: { type: String },
@@ -54,7 +63,8 @@ const schema = new mongoose_1.Schema({
     reads: { type: Number, default: 0 },
     featured: { type: Boolean, default: false },
     article: { type: Boolean, default: false },
-    inFocus: { type: Boolean, default: false }
+    inFocus: { type: Boolean, default: false },
+    thumbNail: { type: String }
 }, {
     timestamps: true
 });

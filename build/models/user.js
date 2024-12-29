@@ -33,7 +33,9 @@ const schema = new mongoose_1.Schema({
     profilePicture: { type: String, required: false, default: "https://i.pinimg.com/originals/cf/7b/65/cf7b6579b699862233526da318a4d3fa.jpg" },
     likes: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "Post" }],
     saved: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "Post" }],
-    role: { type: String, enum: Object.values(role_enums_1.Roles), default: role_enums_1.Roles.ADMINISTRATOR }
+    role: { type: String, enum: Object.values(role_enums_1.Roles), default: role_enums_1.Roles.SUBSCRIBER },
+    resetToken: String,
+    resetTokenExpiration: Date
 }, {
     timestamps: true
 });

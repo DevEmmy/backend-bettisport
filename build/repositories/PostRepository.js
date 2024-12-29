@@ -148,6 +148,11 @@ let PostRepository = class PostRepository {
             return yield this.model.find({ fantasy: true }).populate("author");
         });
     }
+    findByFormat(format) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.model.find({ format }).populate("author");
+        });
+    }
 };
 PostRepository = __decorate([
     (0, typedi_1.Service)(),

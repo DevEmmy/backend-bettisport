@@ -23,7 +23,7 @@ const typedi_1 = require("typedi");
 require("reflect-metadata");
 const PollServices_1 = require("../services/PollServices");
 const response_1 = require("../utils/response");
-let PollController = exports.PollController = class PollController {
+let PollController = class PollController {
     constructor(service) {
         this.service = service;
     }
@@ -134,7 +134,8 @@ let PollController = exports.PollController = class PollController {
         });
     }
 };
-exports.PollController = PollController = __decorate([
+PollController = __decorate([
     (0, typedi_1.Service)(),
     __metadata("design:paramtypes", [PollServices_1.PollService])
 ], PollController);
+exports.PollController = PollController;

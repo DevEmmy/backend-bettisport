@@ -26,7 +26,7 @@ const typedi_1 = require("typedi");
 const CategoryRepository_1 = __importDefault(require("../repositories/CategoryRepository"));
 require("reflect-metadata");
 const slugify_1 = require("../utils/slugify");
-let CategoryService = exports.CategoryService = class CategoryService {
+let CategoryService = class CategoryService {
     constructor(repo) {
         this.repo = repo;
     }
@@ -135,7 +135,8 @@ let CategoryService = exports.CategoryService = class CategoryService {
         });
     }
 };
-exports.CategoryService = CategoryService = __decorate([
+CategoryService = __decorate([
     (0, typedi_1.Service)(),
     __metadata("design:paramtypes", [CategoryRepository_1.default])
 ], CategoryService);
+exports.CategoryService = CategoryService;

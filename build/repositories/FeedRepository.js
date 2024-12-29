@@ -25,7 +25,7 @@ exports.FeedRepository = void 0;
 // repositories/FeedRepository.ts
 const typedi_1 = require("typedi");
 const feed_1 = __importDefault(require("../models/feed"));
-let FeedRepository = exports.FeedRepository = class FeedRepository {
+let FeedRepository = class FeedRepository {
     constructor(model = feed_1.default) {
         this.model = model;
     }
@@ -56,7 +56,8 @@ let FeedRepository = exports.FeedRepository = class FeedRepository {
         });
     }
 };
-exports.FeedRepository = FeedRepository = __decorate([
+FeedRepository = __decorate([
     (0, typedi_1.Service)(),
     __metadata("design:paramtypes", [Object])
 ], FeedRepository);
+exports.FeedRepository = FeedRepository;

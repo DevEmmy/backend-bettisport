@@ -5,7 +5,7 @@ const schema = new mongoose_1.Schema({
     content: { type: String, require: true },
     postedBy: { type: mongoose_1.Schema.Types.ObjectId, ref: "User" },
     likes: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "User" }],
-    image: { type: String }
+    media: String
 }, {
     timestamps: true
 });

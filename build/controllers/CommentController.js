@@ -23,7 +23,7 @@ const typedi_1 = require("typedi");
 require("reflect-metadata");
 const CommentServices_1 = require("../services/CommentServices");
 const response_1 = require("../utils/response");
-let CommentController = exports.CommentController = class CommentController {
+let CommentController = class CommentController {
     constructor(service) {
         this.service = service;
     }
@@ -138,7 +138,8 @@ let CommentController = exports.CommentController = class CommentController {
         });
     }
 };
-exports.CommentController = CommentController = __decorate([
+CommentController = __decorate([
     (0, typedi_1.Service)(),
     __metadata("design:paramtypes", [CommentServices_1.CommentService])
 ], CommentController);
+exports.CommentController = CommentController;

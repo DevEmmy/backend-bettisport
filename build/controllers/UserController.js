@@ -23,7 +23,7 @@ const typedi_1 = require("typedi");
 require("reflect-metadata");
 const UserServices_1 = require("../services/UserServices");
 const response_1 = require("../utils/response");
-let UserController = exports.UserController = class UserController {
+let UserController = class UserController {
     constructor(service) {
         this.service = service;
     }
@@ -157,8 +157,55 @@ let UserController = exports.UserController = class UserController {
             }
         });
     }
+    forgottenPassword(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let data = req.body;
+                let resp = yield this.service.forgotPassword(data.email);
+                if (resp.status == 400) {
+                    return (0, response_1.error)(resp.message, res, resp.status);
+                }
+                return res.json({ message: resp.message });
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
+    resetPassword(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let data = req.body;
+                let resp = yield this.service.updatePassword(data.token, data.newPassword);
+                if (resp.status == 400) {
+                    return (0, response_1.error)(resp.message, res, resp.status);
+                }
+                return res.json({ message: resp.message });
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
+    updateProfile(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let data = req.body;
+                let userId = req.body.user;
+                let resp = yield this.service.updateProfile(userId, data);
+                if (resp.status == 400) {
+                    return (0, response_1.error)(resp.message, res, resp.status);
+                }
+                return res.json({ message: resp.message });
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
 };
-exports.UserController = UserController = __decorate([
+UserController = __decorate([
     (0, typedi_1.Service)(),
     __metadata("design:paramtypes", [UserServices_1.UserServices])
 ], UserController);
+exports.UserController = UserController;

@@ -8,4 +8,4 @@ var Roles;
     Roles["AUTHOR"] = "AUTHOR";
     Roles["EDITOR"] = "EDITOR";
     Roles["ADMINISTRATOR"] = "ADMINISTRATOR";
-})(Roles || (exports.Roles = Roles = {}));
+})(Roles = exports.Roles || (exports.Roles = {}));

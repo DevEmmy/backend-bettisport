@@ -10,6 +10,9 @@ let jwtSecret = process.env.JWT_SECRET;
 const verifyAuth = (request, response, next) => {
     try {
         const authorization = request.headers.authorization;
+        if (!authorization) {
+            return response.status(400).json({ message: "User not Authorized" });
+        }
         let token = authorization.replace("Bearer ", "");
         if (token) {
             let payload = jsonwebtoken_1.default.verify(token, jwtSecret);

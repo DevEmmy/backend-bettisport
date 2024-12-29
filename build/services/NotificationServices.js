@@ -17,70 +17,66 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.NotificationService = void 0;
 const typedi_1 = require("typedi");
-const user_1 = __importDefault(require("../models/user"));
-require("reflect-metadata");
-let UserRepository = class UserRepository {
-    constructor(model = user_1.default) {
-        this.model = model;
+const NotificationRepository_1 = require("../repositories/NotificationRepository");
+let NotificationService = class NotificationService {
+    constructor(notificationRepository) {
+        this.notificationRepository = notificationRepository;
     }
-    create(data) {
+    createNotification(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield new this.model(data).save();
-            return result;
+            return yield this.notificationRepository.createNotification(data);
         });
     }
-    findById(id) {
+    getNotificationById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.findById(id);
-            return result;
+            return yield this.notificationRepository.findNotificationById(id);
         });
     }
-    findByEmail(email) {
+    getUserNotifications(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.findOne({ email });
-            return result;
+            return yield this.notificationRepository.findNotificationsByUser(userId);
         });
     }
-    findAll() {
+    markNotificationAsRead(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.find();
-            return result;
+            return yield this.notificationRepository.markAsRead(id);
         });
     }
-    update(id, data) {
+    deleteNotification(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.model.findByIdAndUpdate(id, data, { new: true });
-            return result;
+            return yield this.notificationRepository.deleteNotification(id);
         });
     }
-    getLikedAndSavedPosts(userId) {
+    // New methods for post liked and saved notifications
+    notifyPostLiked(postOwnerId, user) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield this.model.findById(userId).populate("likes").populate("saved");
-            let saved = user === null || user === void 0 ? void 0 : user.saved;
-            let likes = user === null || user === void 0 ? void 0 : user.likes;
-            return { saved, likes };
+            const notificationData = {
+                user: postOwnerId,
+                title: 'Your post was liked!',
+                message: `${user} liked your post.`,
+                read: false,
+            };
+            console.log("Notification sent");
+            return yield this.createNotification(notificationData);
         });
     }
-    findByRoles(role) {
+    notifyPostSaved(postOwnerId, user) {
         return __awaiter(this, void 0, void 0, function* () {
-            const users = yield this.model.find({ role });
-            return users;
-        });
-    }
-    findByToken(token) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const user = yield this.model.findOne({ resetToken: token });
-            return user;
+            const notificationData = {
+                user: postOwnerId,
+                title: 'Your post was saved!',
+                message: `${user} saved your post.`,
+                read: false,
+            };
+            return yield this.createNotification(notificationData);
         });
     }
 };
-UserRepository = __decorate([
+NotificationService = __decorate([
     (0, typedi_1.Service)(),
-    __metadata("design:paramtypes", [Object])
-], UserRepository);
-exports.default = UserRepository;
+    __metadata("design:paramtypes", [NotificationRepository_1.NotificationRepository])
+], NotificationService);
+exports.NotificationService = NotificationService;

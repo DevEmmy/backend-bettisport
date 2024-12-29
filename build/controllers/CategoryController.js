@@ -23,7 +23,7 @@ const typedi_1 = require("typedi");
 require("reflect-metadata");
 const CategoryServices_1 = require("../services/CategoryServices");
 const response_1 = require("../utils/response");
-let CategoryController = exports.CategoryController = class CategoryController {
+let CategoryController = class CategoryController {
     constructor(service) {
         this.service = service;
     }
@@ -154,7 +154,8 @@ let CategoryController = exports.CategoryController = class CategoryController {
         });
     }
 };
-exports.CategoryController = CategoryController = __decorate([
+CategoryController = __decorate([
     (0, typedi_1.Service)(),
     __metadata("design:paramtypes", [CategoryServices_1.CategoryService])
 ], CategoryController);
+exports.CategoryController = CategoryController;

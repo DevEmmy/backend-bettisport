@@ -16,6 +16,7 @@ postRouter.patch("/like/:id", verifyAuth_1.verifyAuth, (req, res) => postControl
 postRouter.patch("/save/:id", verifyAuth_1.verifyAuth, (req, res) => postController.savePost(req, res));
 postRouter.get("/", (req, res) => postController.getAllPosts(req, res));
 postRouter.get("/class/editors", (req, res) => postController.findPostsByEditorsPick(req, res));
+postRouter.get("/format/:format", (req, res) => postController.findPostsByFormat(req, res));
 postRouter.get("/class/trending", (req, res) => postController.findPostsByMostRead(req, res));
 postRouter.get("/class/popular", (req, res) => postController.findPostsByMostInteracted(req, res));
 postRouter.get("/class/news-breaking", (req, res) => postController.findPostsByNewsBreaking(req, res));

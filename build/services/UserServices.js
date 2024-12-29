@@ -31,7 +31,7 @@ const typedi_1 = require("typedi");
 const mongoose_1 = __importDefault(require("mongoose"));
 const EmailServices_1 = __importDefault(require("./EmailServices"));
 let jwtSecret = process.env.JWT_SECRET;
-let UserServices = exports.UserServices = class UserServices {
+let UserServices = class UserServices {
     constructor(repo, emailService) {
         this.repo = repo;
         this.emailService = emailService;
@@ -172,8 +172,78 @@ let UserServices = exports.UserServices = class UserServices {
             }
         });
     }
+    forgotPassword(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let user = yield this.repo.findByEmail(email);
+                if (!user) {
+                    return {
+                        payload: null,
+                        message: "There is no user with this Email",
+                        status: 400
+                    };
+                }
+                user.resetToken = this.generateToken(String(user._id));
+                this.emailService.sendResetToken(user.email, user.resetToken);
+                user.resetTokenExpiration = new Date(new Date().setHours(new Date().getHours() + 5));
+                this.repo.update(String(user._id), user);
+                return {
+                    message: "Check your Email"
+                };
+            }
+            catch (err) {
+                throw Error(err.message);
+            }
+        });
+    }
+    updatePassword(token, newPassword) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let user = yield this.repo.findByToken(token);
+                if (!user) {
+                    return {
+                        payload: null,
+                        message: "Invalid Token",
+                        status: 400
+                    };
+                }
+                user.password = yield bcrypt_1.default.hash(newPassword, 8);
+                user.resetToken = null;
+                user = yield this.repo.update(String(user._id), user);
+                return {
+                    message: "Password Updated!"
+                };
+            }
+            catch (err) {
+                throw Error(err.message);
+            }
+        });
+    }
+    updateProfile(id, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let user = yield this.repo.findById(id);
+                if (!user) {
+                    return {
+                        payload: null,
+                        message: "User not Found",
+                        status: 40
+                    };
+                }
+                user = yield this.repo.update(id, data);
+                return {
+                    message: "User Updated!",
+                    payload: user
+                };
+            }
+            catch (err) {
+                throw Error(err.message);
+            }
+        });
+    }
 };
-exports.UserServices = UserServices = __decorate([
+UserServices = __decorate([
     (0, typedi_1.Service)(),
     __metadata("design:paramtypes", [UserRepository_1.default, EmailServices_1.default])
 ], UserServices);
+exports.UserServices = UserServices;

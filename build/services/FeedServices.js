@@ -21,12 +21,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FeedService = void 0;
 const typedi_1 = require("typedi");
 const FeedRepository_1 = require("../repositories/FeedRepository");
-let FeedService = exports.FeedService = class FeedService {
+const uploader_1 = require("../utils/uploader");
+let FeedService = class FeedService {
     constructor(feedRepository) {
         this.feedRepository = feedRepository;
     }
     create(feed) {
         return __awaiter(this, void 0, void 0, function* () {
+            try {
+                if (feed.media) {
+                    feed.media = yield (0, uploader_1.uploader)(feed.media);
+                }
+            }
+            catch (err) {
+                return err;
+            }
             return this.feedRepository.create(feed);
         });
     }
@@ -51,7 +60,8 @@ let FeedService = exports.FeedService = class FeedService {
         });
     }
 };
-exports.FeedService = FeedService = __decorate([
+FeedService = __decorate([
     (0, typedi_1.Service)(),
     __metadata("design:paramtypes", [FeedRepository_1.FeedRepository])
 ], FeedService);
+exports.FeedService = FeedService;

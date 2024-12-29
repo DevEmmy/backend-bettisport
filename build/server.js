@@ -17,6 +17,7 @@ require("reflect-metadata");
 const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const FeedRouter_1 = __importDefault(require("./router/FeedRouter"));
+const NotificationRouter_1 = __importDefault(require("./router/NotificationRouter"));
 require("dotenv").config;
 const app = (0, express_1.default)();
 const port = String(process.env.PORT) || 3030;
@@ -37,6 +38,7 @@ app.use("/categories", CategoryRouter_1.default);
 app.use("/polls", PollRouter_1.default);
 app.use("/newsletter", NewsletterRouter_1.default);
 app.use("/feeds", FeedRouter_1.default);
+app.use("/notifications", NotificationRouter_1.default);
 //render the html fil
 const options = {
     definition: {

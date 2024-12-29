@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const typedi_1 = require("typedi");
+const NotificationController_1 = require("../controllers/NotificationController");
+const verifyAuth_1 = require("../middleware/verifyAuth");
+const router = (0, express_1.Router)();
+const notificationController = typedi_1.Container.get(NotificationController_1.NotificationController);
+router.post('/', verifyAuth_1.verifyAuth, (req, res) => notificationController.createNotification(req, res));
+router.get('/:id', verifyAuth_1.verifyAuth, (req, res) => notificationController.getNotificationById(req, res));
+router.get('/', verifyAuth_1.verifyAuth, (req, res) => notificationController.getUserNotifications(req, res));
+router.patch('/read/:id', verifyAuth_1.verifyAuth, (req, res) => notificationController.markNotificationAsRead(req, res));
+router.delete('/:id', verifyAuth_1.verifyAuth, (req, res) => notificationController.deleteNotification(req, res));
+exports.default = router;

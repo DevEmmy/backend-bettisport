@@ -23,7 +23,7 @@ const typedi_1 = require("typedi");
 require("reflect-metadata");
 const PostServices_1 = require("../services/PostServices");
 const response_1 = require("../utils/response");
-let PostController = exports.PostController = class PostController {
+let PostController = class PostController {
     constructor(service) {
         this.service = service;
     }
@@ -208,6 +208,18 @@ let PostController = exports.PostController = class PostController {
             }
         });
     }
+    findPostsByFormat(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const format = req.params.format;
+                const posts = yield this.service.findPostByFormat(format);
+                return (0, response_1.success)(posts, res);
+            }
+            catch (err) {
+                (0, response_1.error)(err.message, res, err.status || 400);
+            }
+        });
+    }
     readPost(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -259,7 +271,8 @@ let PostController = exports.PostController = class PostController {
         });
     }
 };
-exports.PostController = PostController = __decorate([
+PostController = __decorate([
     (0, typedi_1.Service)(),
     __metadata("design:paramtypes", [PostServices_1.PostService])
 ], PostController);
+exports.PostController = PostController;

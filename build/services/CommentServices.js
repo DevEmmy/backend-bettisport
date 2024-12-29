@@ -25,7 +25,7 @@ exports.CommentService = void 0;
 const typedi_1 = require("typedi");
 const CommentRepository_1 = __importDefault(require("../repositories/CommentRepository"));
 require("reflect-metadata");
-let CommentService = exports.CommentService = class CommentService {
+let CommentService = class CommentService {
     constructor(repo) {
         this.repo = repo;
     }
@@ -130,7 +130,8 @@ let CommentService = exports.CommentService = class CommentService {
         });
     }
 };
-exports.CommentService = CommentService = __decorate([
+CommentService = __decorate([
     (0, typedi_1.Service)(),
     __metadata("design:paramtypes", [CommentRepository_1.default])
 ], CommentService);
+exports.CommentService = CommentService;

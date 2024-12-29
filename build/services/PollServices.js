@@ -25,13 +25,17 @@ exports.PollService = void 0;
 const typedi_1 = require("typedi");
 const PollRepository_1 = __importDefault(require("../repositories/PollRepository"));
 require("reflect-metadata");
-let PollService = exports.PollService = class PollService {
+const uploader_1 = require("../utils/uploader");
+let PollService = class PollService {
     constructor(repo) {
         this.repo = repo;
     }
     createPoll(data) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                if (data.media) {
+                    data.media = yield (0, uploader_1.uploader)(data.media);
+                }
                 const poll = yield this.repo.create(data);
                 return poll;
             }
@@ -128,7 +132,8 @@ let PollService = exports.PollService = class PollService {
         });
     }
 };
-exports.PollService = PollService = __decorate([
+PollService = __decorate([
     (0, typedi_1.Service)(),
     __metadata("design:paramtypes", [PollRepository_1.default])
 ], PollService);
+exports.PollService = PollService;
