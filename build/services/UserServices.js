@@ -30,6 +30,7 @@ require("reflect-metadata");
 const typedi_1 = require("typedi");
 const mongoose_1 = __importDefault(require("mongoose"));
 const EmailServices_1 = __importDefault(require("./EmailServices"));
+const uploader_1 = require("../utils/uploader");
 let jwtSecret = process.env.JWT_SECRET;
 let UserServices = class UserServices {
     constructor(repo, emailService) {
@@ -229,6 +230,9 @@ let UserServices = class UserServices {
                         message: "User not Found",
                         status: 40
                     };
+                }
+                if (data.profilePicture) {
+                    data.profilePicture = yield (0, uploader_1.uploader)(data.profilePicture);
                 }
                 user = yield this.repo.update(id, data);
                 return {

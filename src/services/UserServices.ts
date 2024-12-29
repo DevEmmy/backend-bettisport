@@ -7,6 +7,7 @@ import "reflect-metadata";
 import { Service } from "typedi";
 import mongoose from "mongoose";
 import EmailService from "./EmailServices";
+import { uploader } from "../utils/uploader";
 
 let jwtSecret = process.env.JWT_SECRET as string;
 
@@ -204,6 +205,10 @@ export class UserServices {
                     message: "User not Found",
                     status: 40
                 }
+            }
+
+            if(data.profilePicture){
+                data.profilePicture = await uploader(data.profilePicture as string);
             }
 
             user = await this.repo.update(id, data)

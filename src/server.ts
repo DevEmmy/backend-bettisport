@@ -31,7 +31,7 @@ mongoose.connect(process.env.MONGODB_URI as string)
 const connection = mongoose.connection
 connection.once('open', () => { console.log('Database running Successfully') });
 
-app.use("/auth", userRouter)
+app.use("/auth", userRouter);
 app.use("/posts", postRouter)
 app.use("/comments", commentRouter)
 app.use("/categories", categoryRouter)
